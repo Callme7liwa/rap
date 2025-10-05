@@ -1,0 +1,109 @@
+{
+  "artists": [
+    {
+      "id": 641288,
+      "name": "7ARI",
+      "slug": "7ari",
+      "url": "https://genius.com/artists/7ari",
+      "image_url": "https://images.genius.com/44b77f1bb4657722913cf743e80368fc.800x800x1.png",
+      "header_image_url": "https://images.genius.com/fe02615b0785eeddf1f6c08083c80a97.854x480x1.png",
+      "is_verified": false,
+      "followers_count": 61,
+      "alternate_names": ["7ariginal", "Seven ari", "Soufiane Elhari"],
+      "instagram_name": "7ariginal",
+      "twitter_name": "7ariginal",
+      "facebook_name": "7ariofficiel",
+      "normalized_name": "7ari",
+      "has_arabic": false,
+      "likely_moroccan": true,
+      "source_names": ["7ari"],
+      "songs_count": 45
+    }
+  ],
+  "albums": [
+    {
+      "id": 1424328,
+      "name": "1O1",
+      "full_title": "1O1 by 7ARI & Ramoon",
+      "url": "https://genius.com/albums/7ari-and-ramoon/1o1",
+      "cover_art_url": "https://images.genius.com/ecb7e43de90e45fd399d82b2f1cc9de9.1000x1000x1.png",
+      "release_date_for_display": "July 4, 2025",
+      "release_date_components": { "year": 2025, "month": 7, "day": 4 },
+      "artist_id": 641288,
+      "artist_name": "7ARI",
+      "songs": [
+        { "id": 12094524, "title": "101" },
+        { "id": 12094525, "title": "Wad Al Makhazin" },
+        { "id": 12094526, "title": "Depression" },
+        { "id": 12094527, "title": "Celine" },
+        { "id": 12094528, "title": "GWB", "url": "https://genius.com/7ari-and-ramoon-gwb-lyrics" },
+        { "id": 12094529, "title": "Zorro", "url": "https://genius.com/7ari-and-ramoon-zorro-lyrics" },
+        { "id": 12094530, "title": "Koulchi Dial Allah" },
+        { "id": 12094531, "title": "Leyli (Ft. Vacra)", "url": "https://genius.com/7ari-and-ramoon-leyli-lyrics" },
+        { "id": 12094532, "title": "No Seu Tempo (Ft. Teto)", "url": "https://genius.com/7ari-and-ramoon-no-seu-tempo-lyrics" },
+        { "id": 12094533, "title": "Souvenir" },
+        { "id": 12094534, "title": "CC", "url": "https://genius.com/7ari-and-ramoon-cc-lyrics" },
+        { "id": 12094535, "title": "Beslama", "url": "https://genius.com/7ari-and-ramoon-beslama-lyrics" }
+      ]
+    }
+  ],
+  "songs": [
+    {
+      "id": 2999312,
+      "title": "Mi Amore",
+      "full_title": "Mi Amore by 7liwa (Ft. 7ARI, A6Gang, ElGrandeToto & Zeroten)",
+      "url": "https://genius.com/7liwa-mi-amore-lyrics",
+      "path": "/7liwa-mi-amore-lyrics",
+      "release_date_for_display": "March 13, 2017",
+      "release_date_components": { "year": 2017, "month": 3, "day": 13 },
+      "song_art_image_url": "https://images.genius.com/86ee15c29631b9122162bbe82b36a340.1000x1000x1.jpg",
+      "lyrics_state": "complete",
+      "instrumental": false,
+      "annotation_count": 9,
+      "pyongs_count": 8,
+      "pageviews": 46921,
+      "updated_by_human_at": 1754132270,
+      "primary_artist_id": 641288,
+      "primary_artist_name": "7ARI",
+      "primary_artist_slug": "7ari",
+      "album_id": null,
+      "lyrics": "[Intro: 7liwa]\nMi Amore, Mi Amore\nBaby mi Amore\nMi Amore, Mi Amore\nCome to me mi Amore\n\n[Couplet 1: A6Gang]\nGhir wliti l7obs, wliti t7obs\nDima kay 9olk makaynch flous\nWa nti mrid, dima mrid\nKayn li m3ak, kayn li b3id\n\n[Refrain: 7liwa]\nMi Amore, Mi Amore\nBaby mi Amore\nMi Amore, Mi Amore\nCome to me mi Amore\n\n[Couplet 2: Zeroten]\nKandir koulchi bach nrbhek\nMakaynch m3ana walo hta nkhsrek\nKhdam koulchi bach njiw n3ichou\nBach ngoulou lnas ana w nta\n\n[Refrain: 7liwa]\nMi Amore, Mi Amore\nBaby mi Amore\nMi Amore, Mi Amore\nCome to me mi Amore\n\n[Couplet 3: ElGrandeToto]\nKanb9a kandour 3la floussek\nKankhaf nkhser w nkhaf nrbahek\nKnti nti li kat7ssen m3aya\nKnti nti li dima m3aya\n\n[Couplet 4: 7ARI]\n3tini l7ob, l7ob li bghiti\nDima m3ak bach n3ichou lfrita\n3tini flouss, flouss bach nmchi\nW nbni m3ak hayatna jdida\n\n[Outro: 7liwa]\nMi Amore, Mi Amore\nBaby mi Amore\nMi Amore, Mi Amore\nCome to me mi Amore"
+    },
+    {
+      "id": 12094524,
+      "title": "101",
+      "full_title": "101 by 7ARI & Ramoon",
+      "url": "https://genius.com/7ari-and-ramoon-101-lyrics",
+      "release_date_for_display": "July 4, 2025",
+      "release_date_components": { "year": 2025, "month": 7, "day": 4 },
+      "song_art_image_url": "https://images.genius.com/ecb7e43de90e45fd399d82b2f1cc9de9.1000x1000x1.png",
+      "lyrics_state": "complete",
+      "instrumental": false,
+      "annotation_count": 3,
+      "pyongs_count": 2,
+      "pageviews": 8234,
+      "primary_artist_id": 641288,
+      "primary_artist_name": "7ARI",
+      "album_id": 1424328,
+      "lyrics": "[Intro]\nOne-O-One\nYeah, this is how we start\n\n[Verse 1: 7ARI]\nF derb dyal lblad kanjri\nMa3ndi walo ghi l7elm w smiya\nKoulchi kay goul lia impossible\nBessh ana kanb9a kandwi 3la lblan\n\n[Chorus]\n1O1, c'est le début\n1O1, on va pas perdre\n1O1, ghadi nwslou\n1O1, believe in yourself\n\n[Verse 2: Ramoon]\nDes rues sombres aux lumières\nJ'ai appris à me relever\nChaque échec m'a rendu plus fort\nMaintenant c'est mon tour de briller\n\n[Bridge]\nKhdam koulchi b ydik\nMa t9oulch lih impossible\nL7ayat dial sacrifice\nBach twssel l impossible\n\n[Chorus]\n1O1, c'est le début\n1O1, on va pas perdre\n1O1, ghadi nwslou\n1O1, believe in yourself\n\n[Outro]\nOne-O-One\nDaba bdina\nOne-O-One\nW ghadi nkmlou"
+    },
+    {
+      "id": 12094526,
+      "title": "Depression",
+      "full_title": "Depression by 7ARI & Ramoon",
+      "url": "https://genius.com/7ari-and-ramoon-depression-lyrics",
+      "release_date_for_display": "July 4, 2025",
+      "release_date_components": { "year": 2025, "month": 7, "day": 4 },
+      "song_art_image_url": "https://images.genius.com/ecb7e43de90e45fd399d82b2f1cc9de9.1000x1000x1.png",
+      "lyrics_state": "complete",
+      "instrumental": false,
+      "annotation_count": 5,
+      "pyongs_count": 12,
+      "pageviews": 15432,
+      "primary_artist_id": 641288,
+      "primary_artist_name": "7ARI",
+      "album_id": 1424328,
+      "lyrics": "[Intro: 7ARI]\nMa3ndich m3a man n7dar\nKoulchi m9awed w ana wahdi f drari\n\n[Verse 1: 7ARI]\nL7ayat sa3ba, ma3ndi hta 7edd\nKanb9a kanfkr koulchi m3a9d\nF rasi voices kan smahom\nKay goulou lia sir b3id\n\n[Chorus]\nDepression, depression\nF galbi w f rasi\nDepression, depression\nBghit nkhrj men hadi\n\n[Verse 2: Ramoon]\nDans ma tête c'est la tempête\nJe cherche la lumière dans l'obscurité\nChaque jour c'est une bataille\nContre moi-même et mes pensées\n\n[Bridge]\nBghit nkhrj men had l7alat\nBghit n3ich b la liberté\nBessh khayf men demain\nKhayf men l'incertitude\n\n[Chorus]\nDepression, depression\nF galbi w f rasi\nDepression, depression\nBghit nkhrj men hadi\n\n[Outro: Both]\nWalakin ghadi ndwi\nGhadi n9awd men jdid\nDepression machi l finale\nC'est juste une étape"
+    }
+  ]
+}
