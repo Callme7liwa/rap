@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getSongById } from '@/lib/api';
@@ -12,46 +12,82 @@ import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { toPng, toJpeg } from 'html-to-image';
-import { Download, Wand2, Image as ImageIcon, Type, Palette } from 'lucide-react';
+import { Download, Wand2, Image as ImageIcon, Type, Palette, Maximize2, Move, Layers } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
-const themes = {
-  dark: {
-    name: 'Dark',
-    background: 'linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%)',
+const templates = {
+  geniusClassic: {
+    name: 'Classic Genius',
+    overlayGradient: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)',
     textColor: '#ffffff',
-    accentColor: '#6366f1',
+    footerBg: 'rgba(0,0,0,0.8)',
+    fontFamily: 'Inter',
+    fontSize: 40,
+    footerFontSize: 14,
+    textAlign: 'center' as const,
+    textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+    padding: 60,
   },
-  light: {
-    name: 'Light',
-    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+  minimalLight: {
+    name: 'Minimal Light',
+    overlayGradient: 'linear-gradient(to bottom, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%)',
     textColor: '#1a1a1a',
-    accentColor: '#4f46e5',
+    footerBg: 'rgba(255,255,255,0.9)',
+    fontFamily: 'Georgia',
+    fontSize: 36,
+    footerFontSize: 13,
+    textAlign: 'center' as const,
+    textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    padding: 70,
   },
-  neon: {
-    name: 'Neon',
-    background: 'linear-gradient(135deg, #ff006e 0%, #8338ec 100%)',
+  neonMood: {
+    name: 'Neon Mood',
+    overlayGradient: 'linear-gradient(135deg, rgba(139,92,246,0.7) 0%, rgba(236,72,153,0.7) 100%)',
     textColor: '#ffffff',
-    accentColor: '#06ffa5',
+    footerBg: 'rgba(88,28,135,0.9)',
+    fontFamily: 'Inter Tight',
+    fontSize: 44,
+    footerFontSize: 15,
+    textAlign: 'left' as const,
+    textShadow: '0 0 20px rgba(236,72,153,0.8)',
+    padding: 50,
   },
-  film: {
-    name: 'Film Grain',
-    background: 'linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)',
+  filmPoster: {
+    name: 'Film Poster',
+    overlayGradient: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.7) 100%)',
     textColor: '#f5f5f5',
-    accentColor: '#ffd700',
+    footerBg: 'transparent',
+    fontFamily: 'Inter Tight',
+    fontSize: 48,
+    footerFontSize: 12,
+    textAlign: 'left' as const,
+    textShadow: '0 6px 16px rgba(0,0,0,0.9)',
+    padding: 55,
   },
-  duotone: {
-    name: 'Duotone',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  darkGlow: {
+    name: 'Dark Glow',
+    overlayGradient: 'radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%)',
     textColor: '#ffffff',
-    accentColor: '#f093fb',
+    footerBg: 'rgba(15,15,15,0.85)',
+    fontFamily: 'Inter',
+    fontSize: 38,
+    footerFontSize: 13,
+    textAlign: 'center' as const,
+    textShadow: '0 0 30px rgba(99,102,241,0.6), 0 4px 12px rgba(0,0,0,0.8)',
+    padding: 65,
   },
-  blur: {
-    name: 'Blur',
-    background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.8) 0%, rgba(139, 92, 246, 0.8) 100%)',
+  vibrantSplit: {
+    name: 'Vibrant Split',
+    overlayGradient: 'linear-gradient(to bottom right, rgba(236,72,153,0.8) 0%, rgba(59,130,246,0.8) 100%)',
     textColor: '#ffffff',
-    accentColor: '#fbbf24',
+    footerBg: 'rgba(0,0,0,0.7)',
+    fontFamily: 'Inter Tight',
+    fontSize: 42,
+    footerFontSize: 14,
+    textAlign: 'center' as const,
+    textShadow: '0 4px 16px rgba(0,0,0,0.9)',
+    padding: 58,
   },
 };
 
@@ -74,12 +110,52 @@ export default function LyricsCardMaker() {
 
   const [quote, setQuote] = useState('');
   const [attribution, setAttribution] = useState('');
-  const [selectedTheme, setSelectedTheme] = useState<keyof typeof themes>('dark');
+  const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof templates>('geniusClassic');
   const [backgroundImage, setBackgroundImage] = useState('');
-  const [fontSize, setFontSize] = useState(32);
-  const [fontFamily, setFontFamily] = useState('Inter');
-  const [alignment, setAlignment] = useState<'left' | 'center' | 'right'>('center');
+  const [imageScale, setImageScale] = useState(100);
+  const [imagePositionX, setImagePositionX] = useState(50);
+  const [imagePositionY, setImagePositionY] = useState(50);
+  const [imageFit, setImageFit] = useState<'cover' | 'contain' | 'fill'>('cover');
+  const [overlayOpacity, setOverlayOpacity] = useState(100);
+  const [customFontSize, setCustomFontSize] = useState<number | null>(null);
+  const [customAlignment, setCustomAlignment] = useState<'left' | 'center' | 'right' | null>(null);
   const [showWatermark, setShowWatermark] = useState(true);
+  const [showFooter, setShowFooter] = useState(true);
+
+  const template = templates[selectedTemplate];
+  const fontSize = customFontSize ?? template.fontSize;
+  const alignment = customAlignment ?? template.textAlign;
+
+  // Load settings from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('lyricsCardSettings');
+    if (saved) {
+      try {
+        const settings = JSON.parse(saved);
+        if (settings.selectedTemplate) setSelectedTemplate(settings.selectedTemplate);
+        if (settings.backgroundImage) setBackgroundImage(settings.backgroundImage);
+        if (settings.imageScale) setImageScale(settings.imageScale);
+        if (settings.imagePositionX) setImagePositionX(settings.imagePositionX);
+        if (settings.imagePositionY) setImagePositionY(settings.imagePositionY);
+        if (settings.imageFit) setImageFit(settings.imageFit);
+      } catch (e) {
+        console.error('Failed to load settings:', e);
+      }
+    }
+  }, []);
+
+  // Save settings to localStorage
+  useEffect(() => {
+    const settings = {
+      selectedTemplate,
+      backgroundImage,
+      imageScale,
+      imagePositionX,
+      imagePositionY,
+      imageFit,
+    };
+    localStorage.setItem('lyricsCardSettings', JSON.stringify(settings));
+  }, [selectedTemplate, backgroundImage, imageScale, imagePositionX, imagePositionY, imageFit]);
 
   const exportCard = async (format: 'png' | 'jpeg', scale: number = 2) => {
     if (!canvasRef.current) return;
@@ -92,8 +168,12 @@ export default function LyricsCardMaker() {
         cacheBust: true,
       });
 
+      const artistName = attribution.split(' - ')[0] || 'artist';
+      const songName = attribution.split(' - ')[1] || 'song';
+      const filename = `${artistName.toLowerCase().replace(/\s+/g, '-')}-${songName.toLowerCase().replace(/\s+/g, '-')}-quote.${format}`;
+
       const link = document.createElement('a');
-      link.download = `lyrics-card-${Date.now()}.${format}`;
+      link.download = filename;
       link.href = dataUrl;
       link.click();
 
@@ -104,7 +184,27 @@ export default function LyricsCardMaker() {
     }
   };
 
-  const theme = themes[selectedTheme];
+  const copyToClipboard = async () => {
+    if (!canvasRef.current) return;
+
+    try {
+      const dataUrl = await toPng(canvasRef.current, {
+        quality: 1,
+        pixelRatio: 2,
+        cacheBust: true,
+      });
+
+      const blob = await (await fetch(dataUrl)).blob();
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob })
+      ]);
+
+      toast.success('Card copied to clipboard!');
+    } catch (error) {
+      toast.error('Failed to copy to clipboard.');
+      console.error(error);
+    }
+  };
 
   return (
     <div className="min-h-screen py-8">
@@ -153,45 +253,62 @@ export default function LyricsCardMaker() {
             </Card>
 
             <Card className="p-6">
-              <Tabs defaultValue="theme">
-                <TabsList className="grid grid-cols-3 mb-4">
-                  <TabsTrigger value="theme">
+              <Tabs defaultValue="template">
+                <TabsList className="grid grid-cols-4 mb-4">
+                  <TabsTrigger value="template">
                     <Palette className="w-4 h-4 mr-2" />
-                    Theme
+                    Template
                   </TabsTrigger>
-                  <TabsTrigger value="background">
+                  <TabsTrigger value="image">
                     <ImageIcon className="w-4 h-4 mr-2" />
-                    Background
+                    Image
                   </TabsTrigger>
-                  <TabsTrigger value="typography">
+                  <TabsTrigger value="overlay">
+                    <Layers className="w-4 h-4 mr-2" />
+                    Overlay
+                  </TabsTrigger>
+                  <TabsTrigger value="text">
                     <Type className="w-4 h-4 mr-2" />
-                    Typography
+                    Text
                   </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="theme" className="space-y-4">
+                <TabsContent value="template" className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
-                    {Object.entries(themes).map(([key, t]) => (
+                    {Object.entries(templates).map(([key, tmpl]) => (
                       <button
                         key={key}
-                        onClick={() => setSelectedTheme(key as keyof typeof themes)}
+                        onClick={() => {
+                          setSelectedTemplate(key as keyof typeof templates);
+                          setCustomFontSize(null);
+                          setCustomAlignment(null);
+                        }}
                         className={`p-4 rounded-lg border-2 transition-all ${
-                          selectedTheme === key
+                          selectedTemplate === key
                             ? 'border-primary bg-primary/10'
                             : 'border-border hover:border-primary/50'
                         }`}
                       >
                         <div
-                          className="w-full h-16 rounded mb-2"
-                          style={{ background: t.background }}
-                        />
-                        <p className="text-sm font-medium">{t.name}</p>
+                          className="w-full h-16 rounded mb-2 relative overflow-hidden"
+                          style={{ background: tmpl.overlayGradient }}
+                        >
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div 
+                              className="text-xs font-semibold" 
+                              style={{ color: tmpl.textColor, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
+                            >
+                              Aa
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm font-medium">{tmpl.name}</p>
                       </button>
                     ))}
                   </div>
                 </TabsContent>
 
-                <TabsContent value="background" className="space-y-4">
+                <TabsContent value="image" className="space-y-4">
                   <div>
                     <Label htmlFor="bgImage">Background Image URL</Label>
                     <Input
@@ -202,44 +319,118 @@ export default function LyricsCardMaker() {
                       onChange={(e) => setBackgroundImage(e.target.value)}
                     />
                     <p className="text-xs text-muted-foreground mt-1">
-                      Leave empty to use theme gradient
+                      Use artist or album artwork for best results
                     </p>
                   </div>
-                </TabsContent>
 
-                <TabsContent value="typography" className="space-y-4">
                   <div>
-                    <Label htmlFor="font">Font Family</Label>
-                    <Select value={fontFamily} onValueChange={setFontFamily}>
-                      <SelectTrigger id="font">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Maximize2 className="w-4 h-4 text-primary" />
+                      <Label htmlFor="imageScale">Zoom: {imageScale}%</Label>
+                    </div>
+                    <Slider
+                      id="imageScale"
+                      value={[imageScale]}
+                      onValueChange={(v) => setImageScale(v[0])}
+                      min={50}
+                      max={200}
+                      step={5}
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Move className="w-4 h-4 text-primary" />
+                      <Label>Position</Label>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="posX" className="text-xs text-muted-foreground">Horizontal: {imagePositionX}%</Label>
+                        <Slider
+                          id="posX"
+                          value={[imagePositionX]}
+                          onValueChange={(v) => setImagePositionX(v[0])}
+                          min={0}
+                          max={100}
+                          step={1}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="posY" className="text-xs text-muted-foreground">Vertical: {imagePositionY}%</Label>
+                        <Slider
+                          id="posY"
+                          value={[imagePositionY]}
+                          onValueChange={(v) => setImagePositionY(v[0])}
+                          min={0}
+                          max={100}
+                          step={1}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="imageFit">Image Fit</Label>
+                    <Select value={imageFit} onValueChange={(v: any) => setImageFit(v)}>
+                      <SelectTrigger id="imageFit">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {fonts.map((font) => (
-                          <SelectItem key={font.value} value={font.value}>
-                            {font.label}
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="cover">Cover (Fill)</SelectItem>
+                        <SelectItem value="contain">Contain (Fit)</SelectItem>
+                        <SelectItem value="fill">Fill (Stretch)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
+                  <Button 
+                    onClick={() => {
+                      setImageScale(100);
+                      setImagePositionX(50);
+                      setImagePositionY(50);
+                    }}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                  >
+                    Reset Position
+                  </Button>
+                </TabsContent>
+
+                <TabsContent value="overlay" className="space-y-4">
                   <div>
-                    <Label htmlFor="fontSize">Font Size: {fontSize}px</Label>
+                    <Label htmlFor="overlayOpacity">Overlay Opacity: {overlayOpacity}%</Label>
                     <Slider
-                      id="fontSize"
+                      id="overlayOpacity"
+                      value={[overlayOpacity]}
+                      onValueChange={(v) => setOverlayOpacity(v[0])}
+                      min={0}
+                      max={100}
+                      step={5}
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Adjust the overlay darkness for better text readability
+                    </p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="text" className="space-y-4">
+                  <div>
+                    <Label htmlFor="customFontSize">Font Size: {fontSize}px</Label>
+                    <Slider
+                      id="customFontSize"
                       value={[fontSize]}
-                      onValueChange={(v) => setFontSize(v[0])}
-                      min={20}
+                      onValueChange={(v) => setCustomFontSize(v[0])}
+                      min={24}
                       max={72}
                       step={2}
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="alignment">Text Alignment</Label>
-                    <Select value={alignment} onValueChange={(v: any) => setAlignment(v)}>
-                      <SelectTrigger id="alignment">
+                    <Label htmlFor="customAlignment">Text Alignment</Label>
+                    <Select value={alignment} onValueChange={(v: any) => setCustomAlignment(v)}>
+                      <SelectTrigger id="customAlignment">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -248,6 +439,15 @@ export default function LyricsCardMaker() {
                         <SelectItem value="right">Right</SelectItem>
                       </SelectContent>
                     </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="showFooter">Show Footer Bar</Label>
+                    <Switch
+                      id="showFooter"
+                      checked={showFooter}
+                      onCheckedChange={setShowFooter}
+                    />
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -265,22 +465,30 @@ export default function LyricsCardMaker() {
             <Card className="p-6">
               <h3 className="font-display font-semibold mb-4 flex items-center gap-2">
                 <Download className="w-5 h-5 text-primary" />
-                Export
+                Export & Share
               </h3>
               
-              <div className="grid grid-cols-2 gap-3">
-                <Button onClick={() => exportCard('png', 1)} variant="outline">
-                  PNG (1x)
+              <div className="space-y-3">
+                <Button onClick={copyToClipboard} variant="default" className="w-full">
+                  Copy to Clipboard
                 </Button>
-                <Button onClick={() => exportCard('png', 2)} variant="outline">
-                  PNG (2x)
-                </Button>
-                <Button onClick={() => exportCard('jpeg', 1)} variant="outline">
-                  JPEG (1x)
-                </Button>
-                <Button onClick={() => exportCard('jpeg', 2)} variant="outline">
-                  JPEG (2x)
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button onClick={() => exportCard('png', 2)} variant="outline" size="sm">
+                    PNG (2x)
+                  </Button>
+                  <Button onClick={() => exportCard('png', 3)} variant="outline" size="sm">
+                    PNG (3x)
+                  </Button>
+                  <Button onClick={() => exportCard('jpeg', 2)} variant="outline" size="sm">
+                    JPEG (2x)
+                  </Button>
+                  <Button onClick={() => exportCard('jpeg', 3)} variant="outline" size="sm">
+                    JPEG (3x)
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground text-center">
+                  Export at 1080×1080 minimum resolution
+                </p>
               </div>
             </Card>
           </div>
@@ -297,49 +505,95 @@ export default function LyricsCardMaker() {
               >
                 <div
                   ref={canvasRef}
-                  className="w-full h-full p-12 flex flex-col justify-center items-center relative"
+                  className="w-full h-full relative flex flex-col"
                   style={{
-                    background: backgroundImage
-                      ? `url(${backgroundImage})`
-                      : theme.background,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    color: theme.textColor,
-                    fontFamily: fontFamily,
-                    textAlign: alignment,
+                    fontFamily: template.fontFamily,
                   }}
                 >
+                  {/* Background Image */}
                   {backgroundImage && (
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url(${backgroundImage})`,
+                        backgroundSize: imageFit,
+                        backgroundPosition: `${imagePositionX}% ${imagePositionY}%`,
+                        transform: `scale(${imageScale / 100})`,
+                        transformOrigin: 'center',
+                      }}
+                    />
                   )}
                   
-                  <div className="relative z-10 space-y-6 w-full">
-                    <p
-                      className="font-semibold leading-tight"
+                  {/* Overlay Gradient */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: template.overlayGradient,
+                      opacity: overlayOpacity / 100,
+                    }}
+                  />
+                  
+                  {/* Content Container */}
+                  <div 
+                    className="relative z-10 flex-1 flex flex-col justify-center"
+                    style={{
+                      padding: `${template.padding}px`,
+                    }}
+                  >
+                    <div 
+                      className="space-y-6"
                       style={{
-                        fontSize: `${fontSize}px`,
-                        textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                        textAlign: alignment,
                       }}
                     >
-                      {quote || 'Your lyrics will appear here...'}
-                    </p>
-                    
-                    {attribution && (
                       <p
-                        className="font-medium opacity-80"
+                        className="font-bold leading-tight"
                         style={{
-                          fontSize: `${fontSize * 0.5}px`,
-                          color: theme.accentColor,
+                          fontSize: `${fontSize}px`,
+                          color: template.textColor,
+                          textShadow: template.textShadow,
+                          maxWidth: '100%',
+                          wordWrap: 'break-word',
                         }}
                       >
-                        — {attribution}
+                        {quote || 'Your lyrics will appear here...'}
                       </p>
-                    )}
+                    </div>
                   </div>
 
+                  {/* Footer Bar */}
+                  {showFooter && attribution && (
+                    <div 
+                      className="relative z-10 py-4 px-8"
+                      style={{
+                        background: template.footerBg,
+                        backdropFilter: 'blur(10px)',
+                      }}
+                    >
+                      <p
+                        className="font-semibold uppercase tracking-wider"
+                        style={{
+                          fontSize: `${template.footerFontSize}px`,
+                          color: template.textColor,
+                          letterSpacing: '0.1em',
+                        }}
+                      >
+                        {attribution}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Watermark */}
                   {showWatermark && (
-                    <div className="absolute bottom-6 right-6 text-xs opacity-60">
-                      LyricsHub
+                    <div 
+                      className="absolute bottom-4 right-4 text-xs font-semibold uppercase tracking-widest z-20"
+                      style={{
+                        color: template.textColor,
+                        opacity: 0.5,
+                        letterSpacing: '0.15em',
+                      }}
+                    >
+                      GENIUS
                     </div>
                   )}
                 </div>
