@@ -100,7 +100,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {artistsData?.data.map((artist, i) => (
+              {(artistsData?.data || []).map((artist, i) => (
                 <ArtistCard key={artist.id} artist={artist} index={i} />
               ))}
             </div>
@@ -134,7 +134,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {albumsData?.data.map((album, i) => (
+              {(albumsData?.data || []).map((album, i) => (
                 <AlbumCard key={album.id} album={album} index={i} />
               ))}
             </div>
@@ -164,7 +164,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="space-y-2">
-              {songsData?.data.map((song, i) => (
+              {(songsData?.data || []).map((song, i) => (
                 <SongRow key={song.id} song={song} index={i} />
               ))}
             </div>

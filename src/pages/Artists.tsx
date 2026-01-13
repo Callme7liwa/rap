@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getArtists } from '@/lib/api';
 import { ArtistCard } from '@/components/ArtistCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Search, Users } from 'lucide-react';
+import { Search, Users, Plus } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useArtistOwnership } from '@/hooks/useArtistOwnership';
 
 export default function Artists() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const debouncedQuery = useDebounce(searchQuery, 300);
@@ -19,6 +21,20 @@ export default function Artists() {
     queryKey: ['artists', { query: debouncedQuery, page }],
     queryFn: () => getArtists({ query: debouncedQuery, page, limit: 24 }),
   });
+
+  const { data: ownership } = useArtistOwnership();
+
+  // Sort artists to show owned artist first
+  const sortedArtists = useMemo(() => {
+    if (!data?.data || !ownership?.artist?.id) return data?.data || [];
+
+    const ownedArtistId = ownership.artist.id;
+    return [...data.data].sort((a, b) => {
+      if (a.id === ownedArtistId) return -1;
+      if (b.id === ownedArtistId) return 1;
+      return 0;
+    });
+  }, [data?.data, ownership]);
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
@@ -36,9 +52,18 @@ export default function Artists() {
     <div className="min-h-screen py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Users className="w-8 h-8 text-primary" />
-            <h1>Artists</h1>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <Users className="w-8 h-8 text-primary" />
+              <h1>Artists</h1>
+            </div>
+            <Button
+              onClick={() => navigate('/artists/add')}
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Artist
+            </Button>
           </div>
           <p className="text-muted-foreground">
             Browse and discover talented artists from around the world
@@ -79,7 +104,7 @@ export default function Artists() {
         ) : (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {data?.data.map((artist, i) => (
+              {sortedArtists.map((artist, i) => (
                 <ArtistCard key={artist.id} artist={artist} index={i} />
               ))}
             </div>

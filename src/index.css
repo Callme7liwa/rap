@@ -199,3 +199,124 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom styling for AWS Amplify UI to match app theme */
+@layer components {
+  /* Amplify Authenticator container */
+  [data-amplify-authenticator] {
+    @apply font-sans;
+    --amplify-colors-background-primary: transparent;
+    --amplify-colors-background-secondary: transparent;
+  }
+
+  /* Amplify container - remove default background */
+  [data-amplify-container] {
+    @apply bg-transparent;
+    background: transparent !important;
+  }
+
+  [data-amplify-router] {
+    @apply bg-transparent;
+    background: transparent !important;
+  }
+
+  /* Remove default Amplify backgrounds on main containers only */
+  [data-amplify-authenticator] > div {
+    background: transparent !important;
+  }
+
+  /* Gradient button override */
+  [data-amplify-authenticator] button[type="submit"] {
+    @apply bg-gradient-primary text-white font-semibold;
+    @apply hover:opacity-90 transition-all duration-200;
+  }
+
+  /* Tab active color */
+  [data-amplify-authenticator] [role="tab"][aria-selected="true"] {
+    @apply text-primary border-primary;
+  }
+
+  /* Link colors */
+  [data-amplify-authenticator] a,
+  [data-amplify-authenticator] button[data-variation="link"] {
+    @apply text-primary hover:text-primary/80;
+  }
+
+  /* Input focus color */
+  [data-amplify-authenticator] input:focus,
+  [data-amplify-authenticator] select:focus {
+    @apply ring-2 ring-primary/50 border-primary;
+  }
+
+  /* Dark mode input backgrounds */
+  .dark [data-amplify-authenticator] input,
+  .dark [data-amplify-authenticator] select {
+    @apply bg-card border-border text-foreground;
+  }
+
+  .dark [data-amplify-authenticator] label {
+    @apply text-foreground;
+  }
+
+  /* Dark mode social buttons - WHITE background */
+  .dark [data-amplify-authenticator] button[data-provider] {
+    background-color: #ffffff !important;
+    border-color: #e5e7eb !important;
+    color: #1f2937 !important;
+  }
+
+  .dark [data-amplify-authenticator] button[data-provider]:hover {
+    background-color: #f3f4f6 !important;
+  }
+
+  /* More specific selectors for OAuth provider buttons */
+  .dark [data-amplify-authenticator] button[data-provider="google"],
+  .dark [data-amplify-authenticator] button[data-provider="facebook"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #1f2937 !important;
+  }
+
+  .dark [data-amplify-authenticator] button[data-provider="google"]:hover,
+  .dark [data-amplify-authenticator] button[data-provider="facebook"]:hover {
+    background-color: #f3f4f6 !important;
+  }
+
+  /* Ensure all federated buttons are styled */
+  .dark [data-amplify-authenticator] [data-amplify-federatedbuttons] button,
+  .dark [data-amplify-authenticator] div[class*="federated"] button {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #1f2937 !important;
+  }
+
+  /* Dark mode tabs - WHITE color */
+  .dark [data-amplify-authenticator] [role="tab"] {
+    color: #9ca3af !important;
+  }
+
+  .dark [data-amplify-authenticator] [role="tab"][aria-selected="true"] {
+    color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
+
+  .dark [data-amplify-authenticator] [role="tab"]:hover {
+    color: #ffffff !important;
+  }
+
+  /* Dark mode password visibility icons - WHITE color */
+  .dark [data-amplify-authenticator] button[aria-label*="password"],
+  .dark [data-amplify-authenticator] button[aria-label*="Password"] {
+    color: #ffffff !important;
+  }
+
+  .dark [data-amplify-authenticator] button[aria-label*="password"]:hover,
+  .dark [data-amplify-authenticator] button[aria-label*="Password"]:hover {
+    color: #e5e7eb !important;
+  }
+
+  /* Error messages */
+  [data-amplify-authenticator] [role="alert"] {
+    @apply bg-destructive/10 text-destructive border border-destructive/20;
+  }
+}

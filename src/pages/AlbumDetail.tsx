@@ -1,21 +1,28 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getAlbumById, getSongs, getArtistById } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LikeButton } from '@/components/LikeButton';
+import { CommentSection } from '@/components/CommentSection';
+import { EditButton } from '@/components/EditButton';
+import { useOwnsContent } from '@/hooks/useArtistOwnership';
 import { Calendar, Disc, Music, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AlbumDetail() {
   const { id } = useParams<{ id: string }>();
   const albumId = parseInt(id || '0');
+  const navigate = useNavigate();
 
   const { data: album, isLoading } = useQuery({
     queryKey: ['album', albumId],
     queryFn: () => getAlbumById(albumId),
     enabled: !!albumId,
   });
+
+  const isOwned = useOwnsContent(album?.artist_id);
 
   const { data: artist } = useQuery({
     queryKey: ['artist', album?.artist_id],
@@ -92,7 +99,17 @@ export default function AlbumDetail() {
           {/* Album Info */}
           <div className="lg:col-span-2 space-y-6">
             <div>
-              <h1 className="mb-2">{album.name}</h1>
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <h1 className="flex-1">{album.name}</h1>
+                {isOwned && (
+                  <EditButton
+                    onClick={() => navigate(`/albums/${albumId}/edit`)}
+                    variant="default"
+                    size="md"
+                    showText={true}
+                  />
+                )}
+              </div>
               <Link
                 to={`/artists/${album.artist_id}`}
                 className="text-xl text-muted-foreground hover:text-primary transition-colors"
@@ -110,6 +127,13 @@ export default function AlbumDetail() {
                 <Disc className="w-3 h-3" />
                 {album.songs.length} tracks
               </Badge>
+              <LikeButton
+                contentType="album"
+                contentId={album.id}
+                showCount={true}
+                variant="ghost"
+                size="sm"
+              />
             </div>
 
             {/* Tracklist */}
@@ -157,6 +181,13 @@ export default function AlbumDetail() {
                 })}
               </div>
             </div>
+
+            {/* Comments Section */}
+            <CommentSection
+              type="album"
+              itemId={album.id}
+              itemName={album.name}
+            />
           </div>
         </motion.div>
       </div>

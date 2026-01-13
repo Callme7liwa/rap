@@ -1,37 +1,55 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getSongById, getArtistById, getAlbumById } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LikeButton } from '@/components/LikeButton';
+import { CommentSection } from '@/components/CommentSection';
+import { EditButton } from '@/components/EditButton';
+import { useOwnsContent } from '@/hooks/useArtistOwnership';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { Calendar, Music, Eye, MessageSquare, Copy, Share2, User, Disc } from 'lucide-react';
+import { Calendar, Music, Eye, MessageSquare, Copy, Share2, User, Disc, Sparkles, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { LyricsSelector, LyricsSelection } from '@/components/LyricsSelector';
 
 export default function SongDetail() {
   const { id } = useParams<{ id: string }>();
   const songId = parseInt(id || '0');
+  const navigate = useNavigate();
   const [isRTL, setIsRTL] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+  const [lyricsSelections, setLyricsSelections] = useState<LyricsSelection[]>([]);
 
-  const { data: song, isLoading } = useQuery({
+  const { 
+    data: songData, 
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
     queryKey: ['song', songId],
-    queryFn: () => getSongById(songId),
+    queryFn: async () => {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE || ''}/api/songs/${songId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch song');
+      }
+      return response.json();
+    },
     enabled: !!songId,
   });
 
-  const { data: artist } = useQuery({
-    queryKey: ['artist', song?.primary_artist_id],
-    queryFn: () => getArtistById(song!.primary_artist_id),
-    enabled: !!song?.primary_artist_id,
-  });
+  const song = songData?.song;
+  const artist = songData?.artist;
+  const album = songData?.album;
+  const comments = songData?.comments || [];
+  
+  const isOwned = useOwnsContent(song?.primary_artist_id);
 
-  const { data: album } = useQuery({
-    queryKey: ['album', song?.album_id],
-    queryFn: () => getAlbumById(song!.album_id!),
-    enabled: !!song?.album_id,
-  });
+  const loadComments = async () => {
+    await refetch();
+  };
 
   const copyLyrics = () => {
     if (song?.lyrics) {
@@ -50,6 +68,94 @@ export default function SongDetail() {
       navigator.clipboard.writeText(window.location.href);
       toast.success('Link copied to clipboard!');
     }
+  };
+
+  const handleTextSelection = () => {
+    const selection = window.getSelection()?.toString().trim();
+    if (selection) {
+      setSelectedText(selection);
+    }
+  };
+
+  const createCardWithSelection = () => {
+    if (!song) return;
+    
+    const selection = window.getSelection()?.toString().trim();
+    const lyrics = selection || selectedText;
+    
+    if (!lyrics) {
+      toast.error('Please select some lyrics first!');
+      return;
+    }
+    
+    // Naviguer vers le créateur de carte avec les paramètres
+    const params = new URLSearchParams({
+      songId: song.id.toString(),
+      artistId: song.primary_artist_id.toString(),
+      artistName: song.primary_artist_name,
+      songName: song.title,
+      lyrics: lyrics.substring(0, 500) // Limiter à 500 caractères
+    });
+    
+    navigate(`/tools/lyrics-card?${params.toString()}`);
+    toast.success('Creating card with selected lyrics!');
+  };
+
+  const addToSelections = () => {
+    if (!song) return;
+    
+    const selection = window.getSelection()?.toString().trim();
+    const lyrics = selection || selectedText;
+    
+    if (!lyrics) {
+      toast.error('Please select some lyrics first!');
+      return;
+    }
+
+    const newSelection: LyricsSelection = {
+      id: `selection-${Date.now()}-${Math.random()}`,
+      text: lyrics.substring(0, 500),
+      imageUrl: song.song_art_image_url || '',
+      artistName: song.primary_artist_name,
+      songName: song.title,
+      artistId: song.primary_artist_id,
+    };
+
+    setLyricsSelections(prev => [...prev, newSelection]);
+    setSelectedText('');
+    window.getSelection()?.removeAllRanges();
+    toast.success('Lyrics added to selections!');
+  };
+
+  const removeSelection = (id: string) => {
+    setLyricsSelections(prev => prev.filter(s => s.id !== id));
+  };
+
+  const updateSelectionImage = (id: string, imageUrl: string) => {
+    setLyricsSelections(prev =>
+      prev.map(s => s.id === id ? { ...s, imageUrl } : s)
+    );
+  };
+
+  const openCardMakerWithSelections = () => {
+    if (lyricsSelections.length === 0) return;
+    
+    // Pour l'instant, on ouvre avec la première sélection
+    const first = lyricsSelections[0];
+    const params = new URLSearchParams({
+      songId: song?.id.toString() || '',
+      artistId: song?.primary_artist_id.toString() || '',
+      artistName: first.artistName,
+      songName: first.songName,
+      lyrics: first.text
+    });
+    
+    navigate(`/tools/lyrics-card?${params.toString()}`);
+  };
+
+  const clearSelections = () => {
+    setLyricsSelections([]);
+    toast.success('All selections cleared!');
   };
 
   if (isLoading) {
@@ -147,7 +253,17 @@ export default function SongDetail() {
           {/* Song Info & Lyrics */}
           <div className="lg:col-span-2 space-y-6">
             <div>
-              <h1 className="mb-2">{song.title}</h1>
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <h1 className="flex-1">{song.title}</h1>
+                {isOwned && (
+                  <EditButton
+                    onClick={() => navigate(`/songs/${songId}/edit`)}
+                    variant="default"
+                    size="md"
+                    showText={true}
+                  />
+                )}
+              </div>
               <Link
                 to={`/artists/${song.primary_artist_id}`}
                 className="text-xl text-muted-foreground hover:text-primary transition-colors"
@@ -172,6 +288,13 @@ export default function SongDetail() {
               {song.instrumental && (
                 <Badge variant="outline">Instrumental</Badge>
               )}
+              <LikeButton
+                contentType="song"
+                contentId={song.id}
+                showCount={true}
+                variant="ghost"
+                size="sm"
+              />
             </div>
 
             {/* Lyrics Viewer */}
@@ -210,6 +333,15 @@ export default function SongDetail() {
                     <Share2 className="w-4 h-4" />
                     Share
                   </Button>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={createCardWithSelection}
+                    className="gap-2 bg-gradient-primary"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Create Card
+                  </Button>
                 </div>
               </div>
 
@@ -219,13 +351,50 @@ export default function SongDetail() {
                   <p>This is an instrumental track with no lyrics</p>
                 </div>
               ) : (
-                <div
-                  className={`prose prose-invert max-w-none ${isRTL ? 'text-right' : ''}`}
-                  dir={isRTL ? 'rtl' : 'ltr'}
-                >
-                  <pre className="whitespace-pre-wrap font-sans text-base leading-relaxed">
-                    {song.lyrics}
-                  </pre>
+                <div className="space-y-4">
+                  <div
+                    className={`prose prose-invert max-w-none ${isRTL ? 'text-right' : ''} select-text cursor-text`}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                    onMouseUp={handleTextSelection}
+                  >
+                    <pre className="whitespace-pre-wrap font-sans text-base leading-relaxed">
+                      {song.lyrics}
+                    </pre>
+                  </div>
+                  
+                  {selectedText && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center justify-between p-4 bg-primary/10 border border-primary/20 rounded-lg"
+                    >
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">Lyrics Selected</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {selectedText.substring(0, 60)}{selectedText.length > 60 ? '...' : ''}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={addToSelections}
+                          size="sm"
+                          variant="outline"
+                          className="gap-2"
+                        >
+                          <Plus className="w-4 h-4" />
+                          Add to Queue
+                        </Button>
+                        <Button
+                          onClick={createCardWithSelection}
+                          size="sm"
+                          className="bg-gradient-primary gap-2"
+                        >
+                          <Sparkles className="w-4 h-4" />
+                          Create Card
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               )}
             </div>
@@ -242,9 +411,26 @@ export default function SongDetail() {
                 </Button>
               </Link>
             </div>
+
+            {/* Comments Section */}
+            <CommentSection
+              type="song"
+              itemId={song.id}
+              itemName={song.title}
+            />
           </div>
         </motion.div>
       </div>
+
+      {/* Floating Lyrics Selector Panel */}
+      <LyricsSelector
+        selections={lyricsSelections}
+        onRemove={removeSelection}
+        onImageChange={updateSelectionImage}
+        onCreateCards={openCardMakerWithSelections}
+        onClear={clearSelections}
+        artistId={song?.primary_artist_id || 0}
+      />
     </div>
   );
 }

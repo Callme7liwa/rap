@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
@@ -22,3 +23,98 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Terraform
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!example.tfvars
+*.auto.tfvars
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
+.terraformrc
+terraform.rc
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+*.env
+
+# AWS credentials and config
+.aws/
+aws.json
+.aws-credentials
+aws-credentials.json
+aws-config.json
+credentials.json
+config.json
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+db.json
+dump.rdb
+*.sql
+*.bak
+*.dump
+
+# Testing and coverage
+coverage/
+.nyc_output/
+test-results/
+cypress/videos/
+cypress/screenshots/
+*.lcov
+
+# Build and cache
+.cache/
+build/
+dist/
+out/
+.next/
+.nuxt/
+.docz/
+.serverless/
+
+# API keys and secrets
+**/secrets.*
+*secret*
+*credential*
+*password*
+*api_key*
+*apikey*
+*key.*
+*.pem
+*.key
+*.cert
+*.crt
+
+# Local development
+*.local
+local.*
+local-*
+
+# System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+*.bak
+*.cache
+
+# Debug files
+debug/
+debug.log

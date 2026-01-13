@@ -1,0 +1,79 @@
+{
+  
+  "name": "lyricscape-backend-api",
+  
+  "version": "1.0.0",
+  
+  "description": "Backend API for S3 and DynamoDB operations",
+  
+  "main": "server.js",
+  
+  "scripts": {
+  
+    
+  "start": "node server.js",
+  
+    
+  "dev": "nodemon server.js",
+  
+    
+  "create:songs-table": "node scripts/create-songs-table.js",
+  
+    
+  "create:song-comments-table": "node scripts/create-song-comments-table.js",
+  
+    
+  "seed:artists-songs": "node seed-dynamodb.js"
+  
+  },
+  
+  "dependencies": {
+  
+    
+  "@aws-sdk/client-cognito-identity-provider": "^3.908.0",
+  
+    
+  "@aws-sdk/client-dynamodb": "^3.600.0",
+  
+    
+  "@aws-sdk/client-s3": "^3.600.0",
+  
+    
+  "@aws-sdk/lib-dynamodb": "^3.908.0",
+  
+    
+  "@aws-sdk/s3-request-presigner": "^3.908.0",
+  
+    
+  "@aws-sdk/util-dynamodb": "^3.600.0",
+  
+    
+  "aws-jwt-verify": "^5.1.1",
+  
+    
+  "cors": "^2.8.5",
+  
+    
+  "dotenv": "^16.4.5",
+  
+    
+  "express": "^4.19.2",
+  
+    
+  "multer": "^1.4.5-lts.1",
+  
+    
+  "mysql2": "^3.15.2",
+  
+    
+  "uuid": "^8.3.2"
+  
+  },
+  
+  "devDependencies": {
+  
+    
+  "nodemon": "^3.1.0"
+  
+  }
+}

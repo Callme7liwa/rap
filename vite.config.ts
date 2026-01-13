@@ -7,7 +7,17 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
+    port: 8089,
+    proxy: {
+      // Proxy API calls to the backend during development so relative
+      // fetch('/api/...') calls reach the backend instead of returning
+      // the Vite SPA HTML.
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
