@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Realti Intel | Intelligence for Massachusetts Agents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #12B76A;
+    --green-light: #34D399;
+    --green-dim: #059669;
+    --green-faint: #ECFDF5;
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --navy-light: #334155;
+    --near-black: #080F1A;
+    --white: #FFFFFF;
+    --off-white: #F8FAFC;
+    --muted: #94A3B8;
+    --text: #E2E8F0;
+    --text-dark: #1F2937;
+    --text-body: #374151;
+    --text-muted: #6B7280;
+  }
+
+  html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,23,42,0.45); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    height: 64px;
+    display: flex; align-items: center;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+    color: var(--white); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    text-decoration: none; transition: color .2s;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-login { background: transparent; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); padding: 7px 15px; border-radius: 7px; font-weight: 600; font-size: 13.5px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .nav-login:hover { border-color: rgba(255,255,255,0.45); color: var(--white); }
+.btn-green {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green); color: var(--white);
+    font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em;
+    padding: 9px 18px; border-radius: 7px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-1px); }
+  .btn-green-outline {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--green);
+    border: 1.5px solid var(--green);
+    font-size: 14px; font-weight: 600;
+    padding: 11px 22px; border-radius: 7px;
+    text-decoration: none; cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .btn-green-outline:hover { background: var(--green); color: var(--white); }
+
+  /* ── SECTIONS ── */
+  section { width: 100%; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  /* ── HERO ── */
+  #hero {
+    background: var(--navy);
+    padding: 140px 0 100px;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 480px; gap: 72px; align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(18,183,106,0.12);
+    border: 1px solid rgba(18,183,106,0.3);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--green-light); text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-h1 {
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 900; line-height: 1.04; letter-spacing: -2.5px;
+    color: var(--white); margin-bottom: 22px;
+  }
+  .hero-h1 span { color: var(--green); }
+  .hero-sub {
+    font-size: 17px; line-height: 1.65; color: var(--muted);
+    max-width: 540px; margin-bottom: 36px; font-weight: 400;
+  }
+  .hero-cta-row { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+  .btn-hero {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green); color: var(--white);
+    font-size: 15px; font-weight: 800; letter-spacing: -0.1px;
+    padding: 14px 26px; border-radius: 8px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 24px rgba(18,183,106,0.35);
+  }
+  .btn-hero:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(18,183,106,0.45); }
+  .hero-trust {
+    display: grid; grid-template-columns: repeat(2, auto); gap: 12px 32px;
+    font-size: 12.5px; color: var(--muted); font-weight: 500; width: fit-content;
+  }
+  .trust-item { display: flex; align-items: center; gap: 6px; }
+  .trust-check { color: var(--green); font-size: 13px; }
+
+  /* MPS Widget */
+  .mps-widget {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .mps-widget::before {
+    content: '';
+    position: absolute; inset: -1px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(18,183,106,0.2), transparent 50%);
+    pointer-events: none;
+  }
+  .widget-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .widget-title { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+  .widget-badge {
+    font-size: 10px; font-weight: 600; color: var(--green);
+    background: rgba(18,183,106,0.12); border: 1px solid rgba(18,183,106,0.25);
+    padding: 3px 8px; border-radius: 100px; letter-spacing: 0.06em;
+  }
+  .widget-filter {
+    display: flex; gap: 8px; margin-bottom: 24px;
+  }
+  .filter-chip {
+    font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 100px;
+    background: rgba(255,255,255,0.06); color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .filter-chip.active { background: var(--green); color: var(--white); border-color: var(--green); font-weight: 700; }
+  .mps-score-row { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 8px; }
+  .mps-number { font-size: 64px; font-weight: 900; color: var(--white); letter-spacing: -3px; line-height: 1; }
+  .mps-of { font-size: 18px; color: var(--muted); margin-bottom: 10px; font-weight: 500; }
+  .mps-label-row { margin-bottom: 24px; }
+  .mps-label { font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .mps-sublabel { font-size: 12px; color: var(--muted); }
+  .gauge-track {
+    height: 6px; background: rgba(255,255,255,0.08); border-radius: 100px;
+    margin-bottom: 24px; overflow: hidden;
+  }
+  .gauge-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #16A34A, #22C55E); width: 54%; }
+  .gauge-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: -18px; margin-bottom: 20px; }
+  .pillars { display: grid; gap: 10px; }
+  .pillar-row { display: flex; align-items: center; gap: 10px; }
+  .pillar-name { font-size: 11.5px; color: var(--muted); width: 100px; flex-shrink: 0; font-weight: 500; }
+  .pillar-track { flex: 1; height: 5px; background: rgba(255,255,255,0.07); border-radius: 100px; overflow: hidden; }
+  .pillar-fill { height: 100%; border-radius: 100px; background: var(--green); }
+  .pillar-score { font-size: 11.5px; color: var(--white); font-weight: 600; width: 28px; text-align: right; flex-shrink: 0; }
+  .cockpit-bar {
+    margin-top: 20px; padding: 14px 16px;
+    background: rgba(18,183,106,0.08); border: 1px solid rgba(18,183,106,0.2);
+    border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cockpit-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+  .cockpit-values { display: flex; gap: 12px; }
+  .cockpit-val { font-size: 12.5px; font-weight: 700; color: var(--green); }
+  .cockpit-dot { color: var(--muted); font-size: 10px; margin: 0 2px; }
+  .widget-footer {
+    margin-top: 14px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10.5px; color: rgba(148,163,184,0.5);
+  }
+  .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
+
+  /* ── INTELLIGENCE GAP ── */
+  #gap {
+    background: var(--near-black);
+    padding: 100px 0;
+    text-align: center;
+  }
+  .gap-inner { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--green); text-transform: uppercase; margin-bottom: 20px;
+  }
+  .gap-h2 {
+    font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+    letter-spacing: -1.5px; line-height: 1.15; color: var(--white);
+    margin-bottom: 28px;
+  }
+  .gap-body { font-size: 16px; line-height: 1.75; color: #94A3B8; }
+  .gap-body em { color: var(--white); font-style: normal; font-weight: 600; }
+
+  /* placeholder visual */
+  .visual-placeholder {
+    border: 1.5px dashed rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 48px 28px;
+    text-align: center;
+    margin: 40px 0;
+    background: rgba(255,255,255,0.02);
+  }
+  .visual-placeholder .ph-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
+  .visual-placeholder .ph-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: #F59E0B; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .visual-placeholder .ph-desc { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 460px; margin: 0 auto; }
+
+  /* ── BEFORE / AFTER ── */
+  #before-after {
+    background: var(--white);
+    padding: 100px 0;
+  }
+  .ba-section-label { color: var(--green-dim); margin-bottom: 16px; }
+  .ba-h2 {
+    font-size: clamp(26px, 3.5vw, 40px); font-weight: 800;
+    letter-spacing: -1.2px; color: var(--navy); margin-bottom: 48px;
+  }
+  table.comparison {
+    width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  table.comparison thead th {
+    padding: 16px 24px; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--navy); color: var(--white);
+  }
+  table.comparison thead th:first-child { border-right: 1px solid rgba(255,255,255,0.1); }
+  table.comparison tbody tr:nth-child(odd) { background: #F8FAFC; }
+  table.comparison tbody tr:nth-child(even) { background: var(--white); }
+  table.comparison tbody tr:hover { background: #F0FDF4; }
+  table.comparison tbody td {
+    padding: 20px 24px; font-size: 14.5px; line-height: 1.6;
+    border-bottom: 1px solid #E5E7EB; vertical-align: top;
+  }
+  table.comparison tbody td:first-child {
+    color: #6B7280; font-style: italic; border-right: 1px solid #E5E7EB;
+    width: 40%;
+  }
+  table.comparison tbody td:last-child { color: var(--text-dark); font-weight: 500; }
+  .data-highlight { color: var(--green-dim); font-weight: 700; }
+
+  /* ── PLATFORM ── */
+  #platform {
+    background: var(--navy);
+    padding: 100px 0;
+  }
+  .platform-header { text-align: center; margin-bottom: 64px; }
+  .platform-h2 {
+    font-size: clamp(26px, 3.5vw, 40px); font-weight: 800;
+    letter-spacing: -1.2px; color: var(--white); margin-bottom: 12px;
+  }
+  .platform-sub { font-size: 16px; color: var(--muted); }
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    margin-bottom: 48px;
+  }
+  .card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 30px;
+    transition: border-color .2s, transform .2s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), transparent);
+    opacity: 0; transition: opacity .2s;
+  }
+  .card:hover { border-color: rgba(18,183,106,0.3); transform: translateY(-2px); }
+  .card:hover::before { opacity: 1; }
+  .card-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(18,183,106,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 16px;
+  }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .card-body { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
+  .card-ph {
+    border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px;
+    padding: 16px; text-align: center; background: rgba(0,0,0,0.15);
+  }
+  .card-ph span { font-size: 11px; color: rgba(148,163,184,0.4); letter-spacing: 0.06em; text-transform: uppercase; }
+  .platform-cta { text-align: center; }
+  .platform-cta a {
+    font-size: 14px; color: var(--green); font-weight: 600;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: gap .2s;
+  }
+  .platform-cta a:hover { gap: 10px; }
+
+  /* ── TESTIMONIAL ── */
+  #testimonial {
+    background: var(--near-black);
+    padding: 100px 0;
+    text-align: center;
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+    text-align: left;
+  }
+  @media (max-width: 900px) { .testimonial-grid { grid-template-columns: 1fr; max-width: 540px; margin-left: auto; margin-right: auto; } }
+  .testimonial-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .testimonial-card:first-child {
+    border-color: rgba(18,183,106,0.2);
+    background: rgba(18,183,106,0.04);
+  }
+  .quote-mark-sm { font-size: 36px; color: var(--green); opacity: 0.4; line-height: 1; font-family: Georgia, serif; margin-bottom: -8px; }
+  .quote-text-card {
+    font-size: 15px; font-weight: 500;
+    line-height: 1.65; color: rgba(255,255,255,0.88);
+    font-style: italic; flex: 1;
+  }
+  .quote-attr-card {
+    font-size: 12px; font-weight: 700; color: var(--green);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .quote-market { font-size: 11px; color: var(--muted); font-weight: 500; font-style: normal; margin-top: 2px; }
+  /* keep old single-quote styles for any fallback */
+  .quote-mark { font-size: 72px; color: var(--green); opacity: 0.3; line-height: 1; margin-bottom: -16px; font-family: Georgia, serif; }
+  .quote-text {
+    font-size: clamp(18px, 2.5vw, 26px); font-weight: 500;
+    line-height: 1.6; color: var(--white);
+    font-style: italic; max-width: 800px; margin: 0 auto 28px;
+    letter-spacing: -0.3px;
+  }
+  .quote-attr { font-size: 13px; font-weight: 600; color: var(--green); letter-spacing: 0.04em; }
+  .visual-placeholder.dark { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.06); }
+
+  /* ── COVERAGE ── */
+  #coverage {
+    background: var(--white);
+    padding: 100px 0;
+  }
+  .coverage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  .coverage-label { color: var(--green-dim); margin-bottom: 16px; }
+  .coverage-h2 {
+    font-size: clamp(26px, 3.5vw, 40px); font-weight: 800;
+    letter-spacing: -1.2px; color: var(--navy); margin-bottom: 18px;
+  }
+  .coverage-body { font-size: 15.5px; line-height: 1.7; color: var(--text-body); margin-bottom: 32px; }
+  .region-list { display: grid; gap: 10px; }
+  .region-item {
+    padding: 12px 16px; border-radius: 9px;
+    background: var(--off-white); border: 1px solid #E5E7EB;
+  }
+  .region-name { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+  .region-towns { font-size: 12px; color: var(--text-muted); }
+  .region-item.live { border-color: #BBF7D0; background: #F0FDF4; }
+  .region-item.live .region-name { color: var(--green-dim); }
+  .region-badge {
+    display: inline-block; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 100px; margin-left: 8px;
+    background: var(--green); color: var(--white);
+    vertical-align: middle;
+  }
+  .region-badge.soon { background: #E5E7EB; color: #6B7280; }
+  .coverage-map-placeholder {
+    border: 1.5px dashed #D1D5DB; border-radius: 14px;
+    background: #F9FAFB; padding: 48px 24px; text-align: center;
+    min-height: 420px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .coverage-map-placeholder .ph-icon { opacity: 0.25; margin-bottom: 10px; }
+  .coverage-map-placeholder .ph-label { color: #F59E0B; }
+  .coverage-map-placeholder .ph-desc { color: #9CA3AF; }
+  .coverage-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--green-dim); font-weight: 600; font-size: 14px;
+    text-decoration: none; margin-top: 8px;
+    transition: gap .2s;
+  }
+  .coverage-link:hover { gap: 10px; }
+
+  /* ── FOUNDING OFFER ── */
+  #founding {
+    background: var(--navy);
+    padding: 100px 0;
+  }
+  .founding-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+  .founding-label { color: var(--green); margin-bottom: 20px; text-align: center; }
+  .founding-h2 {
+    font-size: clamp(30px, 4vw, 50px); font-weight: 900;
+    letter-spacing: -2px; line-height: 1.1; color: var(--white);
+    text-align: center; margin-bottom: 20px;
+  }
+  .founding-body { font-size: 16px; line-height: 1.7; color: var(--muted); text-align: center; margin-bottom: 48px; max-width: 620px; margin-left: auto; margin-right: auto; }
+  .perks-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+  .perk {
+    background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 24px; text-align: center;
+  }
+  .perk-icon { font-size: 24px; margin-bottom: 12px; }
+  .perk-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .perk-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .founding-cta { text-align: center; }
+  .founding-cta .btn-hero { font-size: 16px; padding: 16px 32px; }
+  .founding-sub { font-size: 12.5px; color: var(--muted); margin-top: 14px; letter-spacing: 0.02em; }
+
+  /* ── FINAL CTA STRIP ── */
+  #cta-strip {
+    background: var(--green);
+    padding: 72px 0;
+    text-align: center;
+  }
+  .strip-h2 {
+    font-size: clamp(22px, 3vw, 36px); font-weight: 800;
+    letter-spacing: -1px; color: var(--navy); margin-bottom: 28px;
+  }
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white); color: var(--navy);
+    font-size: 15px; font-weight: 700; padding: 14px 28px;
+    border-radius: 8px; text-decoration: none;
+    transition: transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070D19;
+    padding: 64px 0 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-size: 18px; font-weight: 700; color: var(--white);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  }
+  .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 220px; }
+  .footer-col-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .footer-links { list-style: none; display: grid; gap: 10px; }
+  .footer-links a { font-size: 13.5px; color: #64748B; text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12.5px; color: #475569;
+  }
+  .footer-bottom-left { display: flex; align-items: center; gap: 6px; }
+  .ma-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(18,183,106,0.1); border: 1px solid rgba(18,183,106,0.2);
+    border-radius: 100px; padding: 3px 10px;
+    font-size: 11px; font-weight: 600; color: var(--green);
+  }
+
+  /* ── DEV NOTICE BANNER ── */
+  .dev-banner {
+    background: #1C1008; border-bottom: 1px solid #F59E0B33;
+    padding: 10px 24px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 12.5px; color: #F59E0B;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  }
+  .dev-banner strong { font-weight: 700; }
+
+  /* HEADLINE BALANCE */
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ── SCROLL REVEAL ── */
+  .js-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .js-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Coming soon links ── */
+  a.coming-soon {
+    opacity: 0.4 !important;
+    cursor: default !important;
+    pointer-events: none !important;
+    text-decoration: none !important;
+  }
+
+  /* ── STICKY CTA BAR ── */
+  .sticky-cta-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--near-black, #080F1A);
+    border-top: 1px solid rgba(18,183,106,0.25);
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 -4px 40px rgba(0,0,0,0.5);
+  }
+  .sticky-cta-bar.visible { transform: translateY(0); }
+  .sticky-cta-bar.hidden  { transform: translateY(100%); }
+  .sticky-bar-text {
+    font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.7);
+    letter-spacing: 0.01em;
+  }
+  .sticky-bar-text strong { color: #12B76A; }
+  .sticky-bar-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #12B76A; color: #fff; font-size: 13px; font-weight: 800;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none;
+    transition: background .2s, transform .15s; white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .sticky-bar-btn:hover { background: #34D399; transform: translateY(-1px); }
+  .sticky-bar-close {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.4); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; line-height: 1; transition: color .2s, border-color .2s;
+    flex-shrink: 0;
+  }
+  .sticky-bar-close:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+
+<!-- DEV PREVIEW BANNER -->
+<div class="dev-banner">
+  ⚠️ <strong>Preview build</strong>, Dashed boxes indicate visual assets to be produced. All copy is final and implementation-ready. Form does not submit.
+</div>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="realti_homepage_preview.html" class="nav-logo">
+      <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+      <span>Realti Intel</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="realti_homepage_preview.html" class="active">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="markets.html">Markets</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://staging.realtiintel.com/" class="nav-login" target="_blank">Sign in</a>
+      <a href="waitlist.html" class="btn-green">Get Founding Access →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">
+          <div class="eyebrow-dot"></div>
+          Now in Early Access · Massachusetts
+        </div>
+        <h1 class="hero-h1">Stop guessing.<br><span>Start winning.</span></h1>
+        <p class="hero-sub">Realti Intel is the market intelligence platform that tells you what the data knows before you walk in the door. Live MLS scoring. Forward-looking signals. No more guessing.</p>
+        <div style="background:rgba(18,183,106,0.08);border:1px solid rgba(18,183,106,0.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;display:inline-block;">
+          <span style="font-size:14px;color:var(--muted);line-height:1.5;">Every 10 days at the wrong price costs a seller <strong style="color:var(--white);">$33,124</strong> in lost proceeds. Most agents don't know that number. <strong style="color:var(--green);">Now you do.</strong></span>
+        </div>
+        <div class="hero-cta-row">
+          <a href="#founding" class="btn-hero">Get Founding Access →</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><span class="trust-check">✓</span> Direct MLS PIN integration</div>
+          <div class="trust-item"><span class="trust-check">✓</span> 15-minute data refresh</div>
+          <div class="trust-item"><span class="trust-check">✓</span> 8 Massachusetts regions</div>
+          <div class="trust-item"><span class="trust-check">✓</span> Founding rate locked for life</div>
+        </div>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.5;opacity:0.75;">Built directly on MLS PIN, the same data feed used by every licensed MA agent, processed into intelligence every 15 minutes. Built with agents in Wellesley, Newton, and Weston.<br>Used&nbsp;in&nbsp;real&nbsp;listing&nbsp;appointments&nbsp;today.</p>
+      </div>
+
+      <!-- MPS Widget -->
+      <div class="mps-widget">
+        <div class="widget-header">
+          <div class="widget-title">Market Power Score</div>
+        </div>
+        <div class="widget-filter">
+          <div class="filter-chip active">Wellesley</div>
+          <div class="filter-chip active">Single Family</div>
+          <div class="filter-chip">24 mo</div>
+        </div>
+        <div class="mps-score-row">
+          <div class="mps-number">54</div>
+          <div class="mps-of">/ 100</div>
+        </div>
+        <div class="mps-label-row">
+          <div class="mps-label">Balanced Negotiation</div>
+          <div class="mps-sublabel">Neutral market · Price Forward</div>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill"></div>
+        </div>
+        <div class="gauge-labels">
+          <span>Buyer's Edge</span>
+          <span>Balanced</span>
+          <span>Seller Adv.</span>
+        </div>
+        <div class="pillars">
+          <div class="pillar-row">
+            <div class="pillar-name">Momentum</div>
+            <div class="pillar-track"><div class="pillar-fill" style="width:76%"></div></div>
+            <div class="pillar-score">19</div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-name">Structural</div>
+            <div class="pillar-track"><div class="pillar-fill" style="width:40%"></div></div>
+            <div class="pillar-score">10</div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-name">Pricing</div>
+            <div class="pillar-track"><div class="pillar-fill" style="width:56%"></div></div>
+            <div class="pillar-score">14</div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-name">Macro</div>
+            <div class="pillar-track"><div class="pillar-fill" style="width:44%"></div></div>
+            <div class="pillar-score">11</div>
+          </div>
+        </div>
+        <div class="cockpit-bar">
+          <div class="cockpit-label">Decision Cockpit</div>
+          <div class="cockpit-values">
+            <div class="cockpit-val">Balanced Negotiation</div>
+            <div class="cockpit-dot">·</div>
+            <div class="cockpit-val">Price Forward</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BRAND LOGO STATEMENT ── -->
+<section id="brand-stamp" style="background:var(--near-black);padding:80px 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1160px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <img src="logo-icon.png" alt="Realti Intel"
+         style="height:160px;width:auto;object-fit:contain;margin-bottom:28px;filter:drop-shadow(0 0 40px rgba(18,183,106,0.25));opacity:0.97;">
+    <div style="font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1.5px;color:var(--white);margin-bottom:12px;">Realti Intel</div>
+    <div style="font-size:15px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;">Rapid Intelligence for Real Estate</div>
+  </div>
+</section>
+
+<!-- ── THE PROBLEM ── -->
+<section id="gap">
+  <div class="gap-inner">
+    <div class="section-label">The Problem</div>
+    <h2 class="gap-h2">Most agents are working from the same information.<br>Lagging&nbsp;by&nbsp;weeks.</h2>
+    <p class="gap-body">By the time a shift shows up in everyone's comps, the agents who saw it coming have already won the listing. Pricing is based on what sold six weeks ago. Timing is based on instinct. Market narratives are assembled in the parking lot.<br><br>In a shifting market, that gap is where deals are lost, and listings are given away to the agent who walked in knowing more.<br><br>Confidence in the room is a data advantage. Most agents don't have it.</p>
+  </div>
+</section>
+
+<!-- ── THE SHIFT ── -->
+<section id="shift" style="background:var(--navy-mid);padding:80px 0;">
+  <div class="container" style="max-width:860px;text-align:center;">
+    <div class="section-label" style="color:var(--green);justify-content:center;">The Shift</div>
+    <h2 style="font-size:clamp(28px,4vw,44px);font-weight:900;color:var(--white);letter-spacing:-1.5px;margin-bottom:24px;line-height:1.1;">The agents who win listings<br>know what others don't.</h2>
+    <p style="font-size:18px;color:var(--muted);line-height:1.7;max-width:680px;margin:0 auto 24px;">They know when demand is accelerating before it shows up in comps. They know when supply is tightening before the market reacts. They know exactly how far to push price, and when to move fast.</p>
+    <p style="font-size:20px;font-weight:700;color:var(--white);line-height:1.4;max-width:600px;margin:0 auto 40px;letter-spacing:-0.3px;">That's not instinct. That's a data advantage.<br><em style="color:var(--green);font-style:normal;">Realti Intel is that advantage.</em></p>
+  </div>
+</section>
+
+<!-- ── MID-SCROLL LOOP-BACK CTA ── -->
+<section style="background:var(--near-black);padding:40px 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);">
+  <div class="container" style="max-width:860px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <p style="font-size:clamp(16px,2vw,20px);font-weight:600;color:rgba(255,255,255,0.75);line-height:1.4;margin:0;">Founding access is limited per market. <em style="color:var(--white);font-style:normal;">When your market fills, it closes.</em></p>
+    <a href="waitlist.html" class="btn-hero" style="white-space:nowrap;flex-shrink:0;">Get Founding Access →</a>
+  </div>
+</section>
+
+<!-- ── PLATFORM TEASER ── -->
+<section id="platform-teaser" style="background:var(--white);padding:100px 0;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+
+      <!-- Left: module list -->
+      <div>
+        <div class="section-label" style="color:var(--green-dim);">The Platform</div>
+        <h2 style="font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-1.2px;color:var(--navy);line-height:1.1;margin-bottom:18px;">This is where<br>you stop guessing.</h2>
+        <p style="font-size:16px;color:var(--text-body);line-height:1.7;margin-bottom:36px;">Ten intelligence modules built on live MLS data, each one built around a specific decision you face in the room. Every answer filtered to your town, your property type, your client.<br>Up&nbsp;and&nbsp;running&nbsp;in&nbsp;under&nbsp;five&nbsp;minutes.</p>
+        <div style="display:grid;gap:18px;margin-bottom:40px;">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:9px;color:#12B76A;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;">Market Power Score</div><div style="font-size:13px;color:var(--text-muted);line-height:1.5;">Who has leverage, right now. One number. Lead with it in any room.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:9px;color:#12B76A;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;">Seasonal Intelligence</div><div style="font-size:13px;color:var(--text-muted);line-height:1.5;">Know when to list. January in Wellesley scores 90/100. Spring is a feeling. This is data.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:9px;color:#12B76A;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;">CMA Generator</div><div style="font-size:13px;color:var(--text-muted);line-height:1.5;">Client-ready in 60 seconds. $/sqft anchor, 24-month trend, DOM cost. Three pages that win the listing.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-width:40px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:9px;color:#12B76A;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;">Decision Cockpit</div><div style="font-size:13px;color:var(--text-muted);line-height:1.5;">Your market strategy in two words. Updated every data cycle.<br>No&nbsp;interpretation&nbsp;required.</div></div>
+          </div>
+        </div>
+        <a href="product.html" style="font-size:14px;font-weight:700;color:var(--green-dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">See all ten modules →</a>
+      </div>
+
+      <!-- Right: data credibility stats -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="background:var(--navy);border-radius:14px;padding:28px 24px;">
+          <div style="font-size:38px;font-weight:900;color:var(--green);letter-spacing:-2px;line-height:1;margin-bottom:10px;">15 min</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;">MLS data refresh. Not daily. Not hourly. Every 15 minutes from MLS PIN.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:14px;padding:28px 24px;">
+          <div style="font-size:38px;font-weight:900;color:var(--green);letter-spacing:-2px;line-height:1;margin-bottom:10px;">24 mo</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;">Rolling closed transaction window. Calibrated to today's market, not the pandemic.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:14px;padding:28px 24px;">
+          <div style="font-size:38px;font-weight:900;color:var(--green);letter-spacing:-2px;line-height:1;margin-bottom:10px;">$33K</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;">Cost of every 10 extra days on market in Wellesley SFR. Most agents don't cite this. Yours do.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:14px;padding:28px 24px;">
+          <div style="font-size:38px;font-weight:900;color:var(--green);letter-spacing:-2px;line-height:1;margin-bottom:10px;">8</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;">Intelligence modules. Every decision you face in the room, covered before you walk in.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<section id="testimonial">
+  <div class="container" style="max-width:1060px;">
+    <div style="text-align:center;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.09em;color:var(--green);text-transform:uppercase;margin-bottom:12px;">From the beta cohort</div>
+      <h2 style="font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-0.8px;color:var(--white);line-height:1.15;">What agents say after<br>the first appointment.</h2>
+    </div>
+
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card">
+        <div class="quote-mark-sm">"</div>
+        <p class="quote-text-card">For the first time, I walked into a listing appointment knowing exactly what month to push for and exactly what the DOM cost would be if we overpriced. The sellers didn't question me once.</p>
+        <div>
+          <div class="quote-attr-card">Beta Agent</div>
+          <div class="quote-market">MetroWest MA · Listing appointment</div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark-sm">"</div>
+        <p class="quote-text-card">I stopped walking in with comps. Now I walk in with a number, the Market Power Score, and I explain exactly what's behind it. First listing I used it on, the sellers accepted my recommended price without a counter.</p>
+        <div>
+          <div class="quote-attr-card">Beta Agent</div>
+          <div class="quote-market">North Shore MA · Seller consultation</div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark-sm">"</div>
+        <p class="quote-text-card">The Seasonal Score changed how I talk to buyers about timing. I used to say "the market's a little slow." Now I show them exactly why, and what it means for their offer. They trust me differently now.</p>
+        <div>
+          <div class="quote-attr-card">Beta Agent</div>
+          <div class="quote-market">Greater Boston · Buyer advisory</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOUNDING OFFER ── -->
+<section id="founding">
+  <div class="founding-inner">
+    <div class="section-label founding-label">Early Access</div>
+    <h2 class="founding-h2">This is not for every agent.<br>It's for the ones who win.</h2>
+    <p class="founding-body">We're opening access to a limited founding cohort, agents who will use this intelligence to win listings before their market catches on. Whatever rate you confirm at is yours permanently. As features ship, coverage expands, and prices increase for new members, yours doesn't move.</p>
+    <p style="font-size:14px;font-weight:700;color:var(--green);letter-spacing:0.05em;margin-bottom:32px;text-transform:uppercase;">This cohort is capped per market. Once it fills, founding pricing is gone.</p>
+    <div class="perks-row">
+      <div class="perk">
+        <div class="perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+        <div class="perk-title">Founding rate locked for life</div>
+        <div class="perk-body">Confirmed at sign-up. Never increases regardless of what we charge new members.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+        <div class="perk-title">First access to new markets</div>
+        <div class="perk-body">You tell us where you work. You're first in when your market goes live.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <div class="perk-title">Direct product input</div>
+        <div class="perk-body">We're actively building. Founding agents shape what ships next, your market, your workflow, your edge.</div>
+      </div>
+    </div>
+    <div class="founding-cta">
+      <a href="waitlist.html" class="btn-hero">Get Founding Access →</a>
+      <div class="founding-sub">No credit card required · No spam · We'll email you when your market is ready</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA STRIP ── -->
+<section id="cta-strip">
+  <div class="container">
+    <h2 class="strip-h2">Know the market before anyone else does.</h2>
+    <p style="color:rgba(255,255,255,0.6);font-size:16px;margin-bottom:32px;">Founding access is limited per market. The agents who lock in now are the ones who walk in knowing, before the rest of the market catches up.</p>
+    <a href="waitlist.html" class="btn-white">Get Founding Access →</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;"><span style="font-size:18px;font-weight:700;color:var(--white);letter-spacing:-0.5px;">Realti Intel</span>
+        </div>
+        <div class="footer-tagline">Rapid Intelligence for Real Estate.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="product.html">Product</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="waitlist.html">Get Access</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Markets</div>
+        <ul class="footer-links">
+          <li><a href="markets.html">Boston Core</a></li>
+          <li><a href="markets.html">MetroWest</a></li>
+          <li><a href="markets.html">North Shore</a></li>
+          <li><a href="markets.html">All Markets →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 Realti Intel Inc. · All rights reserved</div>
+      <div class="ma-badge"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Built in Massachusetts</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Animate MPS gauge on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const fill = document.querySelector('.gauge-fill');
+    const num = document.querySelector('.mps-number');
+    const pillarFills = document.querySelectorAll('.pillar-fill');
+    const pillarScores = document.querySelectorAll('.pillar-score');
+    const targets = [76, 40, 56, 44];
+    const scores = [19, 10, 14, 11];
+
+    fill.style.width = '0%';
+    num.textContent = '0';
+    pillarFills.forEach(p => p.style.width = '0%');
+    pillarScores.forEach(p => p.textContent = '0');
+
+    setTimeout(() => {
+      let start = 0; const target = 54; const duration = 1200;
+      const step = () => {
+        start += 1.2;
+        const val = Math.min(Math.round(start), target);
+        num.textContent = val;
+        fill.style.width = (val / 100 * 100) + '%';
+        fill.style.transition = 'width 0.05s';
+        if (val < target) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+
+      targets.forEach((t, i) => {
+        setTimeout(() => {
+          pillarFills[i].style.transition = 'width 0.8s cubic-bezier(.4,0.2,1)';
+          pillarFills[i].style.width = t + '%';
+          let s = 0;
+          const sc = setInterval(() => {
+            s++;
+            pillarScores[i].textContent = Math.min(s, scores[i]);
+            if (s >= scores[i]) clearInterval(sc);
+          }, 800 / scores[i]);
+        }, 200 + i * 180);
+      });
+    }, 600);
+  });
+
+  // ── Scroll reveal animations ──
+  (function() {
+    var SELECTORS = 'h2, h3.module-card.feature-card.use-case.perk.problem-card.pricing-card.step-h > div.steps-h > div.stat-block.market-card.guarantee-item.faq-item, [class*="-card"], [class*="-step"], [class*="-perk"]';
+    function initReveal() {
+      var els = document.querySelectorAll(SELECTORS);
+      els.forEach(function(el) {
+        // Skip elements already in viewport on load (hero area)
+        var rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.85) {
+          el.classList.add('js-reveal');
+        }
+      });
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.js-reveal').forEach(function(el) {
+        observer.observe(el);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else {
+      initReveal();
+    }
+  })();
+
+  // ── Sticky CTA bar ──
+  (function() {
+    var bar = document.getElementById('sticky-cta');
+    var closeBtn = document.getElementById('sticky-close');
+    if (!bar) return;
+    var dismissed = sessionStorage.getItem('sticky-dismissed');
+    if (dismissed) return;
+    var shown = false;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 520 && !shown) {
+        shown = true;
+        bar.classList.add('visible');
+      } else if (window.scrollY <= 520 && shown) {
+        shown = false;
+        bar.classList.remove('visible');
+      }
+    }, { passive: true });
+    closeBtn.addEventListener('click', function() {
+      bar.classList.remove('visible');
+      bar.classList.add('hidden');
+      sessionStorage.setItem('sticky-dismissed', '1');
+    });
+  })();
+</script>
+
+<!-- ── STICKY CTA BAR ── -->
+<div class="sticky-cta-bar" id="sticky-cta">
+  <span class="sticky-bar-text">Founding rate closing &nbsp;·&nbsp; <strong>$79/month, locked for life</strong></span>
+  <a href="waitlist.html" class="sticky-bar-btn">Get Founding Access →</a>
+  <button class="sticky-bar-close" id="sticky-close" aria-label="Dismiss">✕</button>
+</div>
+
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  if(!nav) return;
+  nav.style.transition = 'background 0.35s ease, box-shadow 0.35s ease';
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    var ratio = Math.min(y / 120, 1);
+    var alpha = 0.45 + ratio * 0.43; // 0.45 at top → 0.88 when scrolled
+    nav.style.background = 'rgba(15,23,42,' + alpha.toFixed(2) + ')';
+    nav.style.boxShadow = ratio > 0.1 ? '0 1px 24px rgba(0,0,0,' + (ratio * 0.35).toFixed(2) + ')' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

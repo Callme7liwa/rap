@@ -46,6 +46,8 @@ terraform.rc
 .env.production
 .env.staging
 *.env
+!.env.example
+!**/.env.example
 
 # AWS credentials and config
 .aws/

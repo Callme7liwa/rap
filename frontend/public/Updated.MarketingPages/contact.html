@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Contact | Realti Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #12B76A; --green-light: #34D399; --green-dim: #059669;
+    --navy: #0F172A; --navy-mid: #1E293B; --near-black: #080F1A;
+    --white: #FFFFFF; --off-white: #F8FAFC; --muted: #94A3B8;
+    --text-dark: #1F2937; --text-body: #374151;
+  }
+  html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--navy);
+    color: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    min-height: 100vh; display: flex; flex-direction: column; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,23,42,0.45); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.07); height: 64px;
+    display: flex; align-items: center; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%;
+    display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: var(--white);
+    text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    transition: color .2s; letter-spacing: 0.01em; }
+  .nav-links a:hover.nav-links a.active { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .btn-green { display: inline-flex; align-items: center; gap: 6px; background: var(--green);
+    color: var(--white); font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s; }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-1px); }
+  .nav-login { background: transparent; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); padding: 7px 15px; border-radius: 7px; font-weight: 600; font-size: 13.5px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .nav-login:hover { border-color: rgba(255,255,255,0.45); color: var(--white); }
+
+  /* HERO */
+  .page-hero { padding: 120px 0 64px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .page-hero h1 { font-size: clamp(32px,4vw,48px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .page-hero p { font-size: 16px; color: var(--muted); line-height: 1.6; max-width: 480px; }
+
+  /* CONTACT LAYOUT */
+  .contact-section { flex: 1; padding: 72px 0 100px; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
+
+  /* LEFT PANEL */
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-block { }
+  .contact-block-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+  .contact-block-value { font-size: 15px; color: var(--white); font-weight: 600; margin-bottom: 4px; }
+  .contact-block-sub { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .contact-block a { color: var(--green); text-decoration: none; }
+  .contact-block a:hover { text-decoration: underline; }
+
+  .response-badge { background: rgba(18,183,106,0.08); border: 1px solid rgba(18,183,106,0.2);
+    border-radius: 12px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 14px; }
+  .response-badge-icon { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+  .response-badge-text { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+  .response-badge-text strong { color: var(--white); display: block; font-size: 14px; margin-bottom: 3px; }
+
+  /* FORM */
+  .contact-form-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 48px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.75);
+    margin-bottom: 8px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 12px 14px; font-size: 14px; color: var(--white);
+    font-family: inherit; outline: none; transition: border-color .2s; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #475569; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: rgba(18,183,106,0.5); }
+  .form-group select { appearance: none; cursor: pointer; }
+  .form-group select option { background: var(--navy-mid); color: var(--white); }
+  .form-group textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+  .form-submit { width: 100%; background: var(--green); color: var(--white); font-size: 15px;
+    font-weight: 700; padding: 14px 24px; border-radius: 8px; border: none; cursor: pointer;
+    font-family: inherit; transition: background .2s, transform .15s; margin-top: 8px; }
+  .form-submit:hover { background: var(--green-light); transform: translateY(-1px); }
+  .form-note { font-size: 12.5px; color: var(--muted); text-align: center; margin-top: 14px; line-height: 1.5; }
+
+  /* SUCCESS STATE */
+  .form-success { display: none; text-align: center; padding: 40px 0; }
+  .form-success.visible { display: block; }
+  .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(18,183,106,0.12);
+    border: 2px solid rgba(18,183,106,0.3); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px; }
+  .success-icon svg { color: var(--green); }
+  .form-success h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+  .form-success p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer { background: var(--near-black); border-top: 1px solid rgba(255,255,255,0.06); padding: 64px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 220px; }
+  .footer-col-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .footer-links { list-style: none; display: grid; gap: 10px; }
+  .footer-links a { font-size: 13.5px; color: #64748B; text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px; color: var(--muted); flex-wrap: wrap; gap: 12px; }
+  .footer-bottom-left { display: flex; align-items: center; gap: 6px; }
+  .ma-badge { font-size: 13px; color: var(--muted); }
+
+  @media(max-width:768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="realti_homepage_preview.html" class="nav-logo">
+      <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+      <span>Realti Intel</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="realti_homepage_preview.html">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="markets.html">Markets</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://staging.realtiintel.com/" class="nav-login" target="_blank">Sign in</a>
+      <a href="waitlist.html" class="btn-green">Get Founding Access →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Get in touch.</h1>
+    <p>Questions about the platform or founding access?<br>We read every message and respond within 48&nbsp;hours.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<main class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT -->
+      <div class="contact-info">
+
+        <div class="contact-block">
+          <div class="contact-block-label">Email</div>
+          <div class="contact-block-value"><a href="mailto:info@realtiintel.com">info@realtiintel.com</a></div>
+          <div class="contact-block-sub">For general questions, market inquiries, and partnership&nbsp;requests.</div>
+        </div>
+
+        <div class="contact-block">
+          <div class="contact-block-label">Founding Access</div>
+          <div class="contact-block-value"><a href="waitlist.html">Apply on the waitlist →</a></div>
+          <div class="contact-block-sub">Ready to join? Use the waitlist form for the fastest response, we review every submission within 48 hours.</div>
+        </div>
+
+        <div class="contact-block">
+          <div class="contact-block-label">Location</div>
+          <div class="contact-block-value">Massachusetts</div>
+          <div class="contact-block-sub">Built for Massachusetts agents, by a Massachusetts team.<br>We know these markets because we live in&nbsp;them.</div>
+        </div>
+
+        <div class="response-badge">
+          <svg class="response-badge-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="response-badge-text">
+            <strong>48-hour response time</strong>
+            We respond to every message personally. No bots, no form letters, just a real answer from someone who knows the platform.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FORM -->
+      <div class="contact-form-card">
+        <div id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-first">First name</label>
+              <input type="text" id="c-first" placeholder="Jennifer">
+            </div>
+            <div class="form-group">
+              <label for="c-last">Last name</label>
+              <input type="text" id="c-last" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="c-email">Email address</label>
+            <input type="email" id="c-email" placeholder="you@yourbrokerage.com">
+          </div>
+          <div class="form-group">
+            <label for="c-subject">What's this about?</label>
+            <select id="c-subject">
+              <option value="" disabled selected>Select a topic</option>
+              <option>Founding access question</option>
+              <option>My market isn't listed</option>
+              <option>Pricing or billing</option>
+              <option>Press or partnership</option>
+              <option>Technical issue</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" placeholder="Tell us what's on your mind..."></textarea>
+          </div>
+          <button class="form-submit" id="contact-submit">Send message →</button>
+          <p class="form-note">We respond to every message within 48 hours. Founding access questions are prioritized.</p>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div class="form-success" id="form-success">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h3>Message sent.</h3>
+          <p>Thanks for reaching out. We'll get back to you within 48 hours, usually sooner.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;"><span style="font-size:18px;font-weight:700;color:var(--white);letter-spacing:-0.5px;">Realti Intel</span>
+        </div>
+        <div class="footer-tagline">Rapid Intelligence for Real Estate.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="product.html">Product</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="waitlist.html">Get Access</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Markets</div>
+        <ul class="footer-links">
+          <li><a href="markets.html">Boston Core</a></li>
+          <li><a href="markets.html">MetroWest</a></li>
+          <li><a href="markets.html">North Shore</a></li>
+          <li><a href="markets.html">All Markets →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 Realti Intel Inc. · All rights reserved</div>
+      <div class="ma-badge"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Built in Massachusetts</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('contact-submit').addEventListener('click', function() {
+    var first = document.getElementById('c-first');
+    var email = document.getElementById('c-email');
+    var subject = document.getElementById('c-subject');
+    var message = document.getElementById('c-message');
+    var fields = [first, email, message];
+    var valid = true;
+
+    fields.forEach(function(el) { el.style.borderColor = ''; });
+
+    fields.forEach(function(el) {
+      if (!el.value.trim()) { el.style.borderColor = '#F87171'; valid = false; }
+    });
+    if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.style.borderColor = '#F87171'; valid = false;
+    }
+    if (!valid) { fields.find(function(el) { return !el.value.trim(); })?.focus(); return; }
+
+    var btn = this;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    setTimeout(function() {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').classList.add('visible');
+    }, 800);
+  });
+</script>
+
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  if(!nav) return;
+  nav.style.transition = 'background 0.35s ease, box-shadow 0.35s ease';
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    var ratio = Math.min(y / 120, 1);
+    var alpha = 0.45 + ratio * 0.43; // 0.45 at top → 0.88 when scrolled
+    nav.style.background = 'rgba(15,23,42,' + alpha.toFixed(2) + ')';
+    nav.style.boxShadow = ratio > 0.1 ? '0 1px 24px rgba(0,0,0,' + (ratio * 0.35).toFixed(2) + ')' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

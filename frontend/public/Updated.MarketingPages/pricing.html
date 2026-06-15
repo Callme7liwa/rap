@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Pricing | Realti Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #12B76A; --green-light: #34D399; --green-dim: #059669;
+    --green-faint: #ECFDF5; --navy: #0F172A; --navy-mid: #1E293B;
+    --navy-light: #334155; --near-black: #080F1A;
+    --white: #FFFFFF; --off-white: #F8FAFC; --muted: #94A3B8;
+    --text: #E2E8F0; --text-dark: #1F2937; --text-body: #374151; --text-muted: #6B7280;
+  }
+  html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--navy); color: var(--white);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,23,42,0.45); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.07); height: 64px;
+    display: flex; align-items: center; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%;
+    display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: var(--white);
+    text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    transition: color .2s; letter-spacing: 0.01em; }
+  .nav-links a:hover.nav-links a.active { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-login { background: transparent; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); padding: 7px 15px; border-radius: 7px; font-weight: 600; font-size: 13.5px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .nav-login:hover { border-color: rgba(255,255,255,0.45); color: var(--white); }
+  .btn-green { display: inline-flex; align-items: center; gap: 6px; background: var(--green);
+    color: var(--white); font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s; }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-1px); }
+  .btn-green-outline { display: inline-flex; align-items: center; gap: 6px; background: transparent;
+    color: var(--green); border: 1.5px solid var(--green); font-size: 14px; font-weight: 600;
+    padding: 11px 22px; border-radius: 7px; text-decoration: none; cursor: pointer;
+    transition: background .2s, color .2s; }
+  .btn-green-outline:hover { background: var(--green); color: var(--white); }
+  .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: var(--green);
+    color: var(--white); font-size: 15px; font-weight: 800; padding: 14px 26px; border-radius: 8px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 24px rgba(18,183,106,0.35); }
+  .btn-hero:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(18,183,106,0.45); }
+  section { width: 100%; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(18,183,106,0.12); border: 1px solid rgba(18,183,106,0.3);
+    border-radius: 100px; padding: 5px 14px; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.08em; color: var(--green-light); text-transform: uppercase; margin-bottom: 28px; }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  /* PAGE HERO */
+  .page-hero { padding: 140px 0 80px; background: var(--navy); position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 700px;
+    height: 700px; background: radial-gradient(ellipse, rgba(18,183,106,0.08) 0%, transparent 65%);
+    pointer-events: none; }
+  .hero-h1 { font-size: clamp(38px,5.5vw,68px); font-weight: 900; line-height: 1.06;
+    letter-spacing: -2px; color: var(--white); margin-bottom: 20px; }
+  .hero-h1 span { color: var(--green); }
+  .hero-sub { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 600px; margin-bottom: 36px; }
+  /* SECTIONS */
+  .section-dark { background: var(--navy); padding: 96px 0; }
+  .section-near-black { background: var(--near-black); padding: 96px 0; }
+  .section-light { background: var(--off-white); padding: 96px 0; }
+  .section-gray { background: #F1F5F9; padding: 96px 0; }
+  .section-h2-light { font-size: clamp(28px,3.5vw,44px); font-weight: 800; letter-spacing: -1px;
+    color: var(--white); line-height: 1.1; margin-bottom: 18px; }
+  .section-h2-dark { font-size: clamp(28px,3.5vw,44px); font-weight: 800; letter-spacing: -1px;
+    color: var(--text-dark); line-height: 1.1; margin-bottom: 18px; }
+  .body-light { font-size: 16px; line-height: 1.7; color: var(--muted); }
+  .body-dark { font-size: 16px; line-height: 1.7; color: var(--text-body); }
+  /* PRICING CARDS */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; } }
+  .pricing-card { background: var(--white); border: 1px solid #E2E8F0; border-radius: 16px;
+    padding: 36px 32px; position: relative; }
+  .pricing-card.featured { background: var(--navy); border-color: var(--green);
+    border-width: 2px; color: var(--white); }
+  .pricing-card.dark { background: var(--navy-mid); border-color: rgba(255,255,255,0.1);
+    color: var(--white); }
+  .pricing-badge { display: inline-block; background: var(--green); color: var(--white);
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em; padding: 4px 10px;
+    border-radius: 100px; margin-bottom: 16px; text-transform: uppercase; }
+  .pricing-tier { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .pricing-tier.light { color: var(--text-dark); }
+  .pricing-tier.dark-text { color: var(--white); }
+  .pricing-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
+  .pricing-sub.light-muted { color: var(--muted); }
+  .pricing-price { font-size: 44px; font-weight: 900; letter-spacing: -2px; margin-bottom: 4px; }
+  .pricing-price.dark-text { color: var(--white); }
+  .pricing-price.light-text { color: var(--text-dark); }
+  .pricing-freq { font-size: 13px; margin-bottom: 28px; }
+  .pricing-freq.muted-text { color: var(--text-muted); }
+  .pricing-freq.light-muted { color: var(--muted); }
+  .pricing-features { list-style: none; margin-bottom: 32px; }
+  .pricing-features li { font-size: 14px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+    display: flex; gap: 10px; align-items: flex-start; color: var(--text-body); }
+  .pricing-features.dark-list li { border-color: rgba(255,255,255,0.08); color: var(--text); }
+  .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  /* FAQ */
+  .faq-item { padding: 24px 0; border-bottom: 1px solid #E2E8F0; }
+  .faq-q { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+  .faq-a { font-size: 15px; color: var(--text-body); line-height: 1.65; }
+  /* GUARANTEE ROW */
+  .guarantee-icon { margin-bottom:12px; }
+  .guarantee-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 40px; }
+  @media (max-width: 768px) { .guarantee-row { grid-template-columns: 1fr; } }
+  .guarantee-item { display: flex; flex-direction: column; gap: 6px; }
+  .guarantee-title { font-size: 15px; font-weight: 700; }
+  .guarantee-body { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+  /* FOOTER */
+  footer { background: var(--near-black); border-top: 1px solid rgba(255,255,255,0.06); padding: 64px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 240px; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 16px; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: var(--muted); }
+
+
+  /* HEADLINE BALANCE */
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ── SCROLL REVEAL ── */
+  .js-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .js-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Coming soon links ── */
+  a.coming-soon {
+    opacity: 0.4 !important;
+    cursor: default !important;
+    pointer-events: none !important;
+    text-decoration: none !important;
+  }
+
+  /* ── STICKY CTA BAR ── */
+  .sticky-cta-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--near-black, #080F1A);
+    border-top: 1px solid rgba(18,183,106,0.25);
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 -4px 40px rgba(0,0,0,0.5);
+  }
+  .sticky-cta-bar.visible { transform: translateY(0); }
+  .sticky-cta-bar.hidden  { transform: translateY(100%); }
+  .sticky-bar-text {
+    font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.7);
+    letter-spacing: 0.01em;
+  }
+  .sticky-bar-text strong { color: #12B76A; }
+  .sticky-bar-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #12B76A; color: #fff; font-size: 13px; font-weight: 800;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none;
+    transition: background .2s, transform .15s; white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .sticky-bar-btn:hover { background: #34D399; transform: translateY(-1px); }
+  .sticky-bar-close {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.4); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; line-height: 1; transition: color .2s, border-color .2s;
+    flex-shrink: 0;
+  }
+  .sticky-bar-close:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="realti_homepage_preview.html" class="nav-logo">
+      <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+      <span>Realti Intel</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="realti_homepage_preview.html">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pricing.html" class="active">Pricing</a></li>
+      <li><a href="markets.html">Markets</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://staging.realtiintel.com/" class="nav-login" target="_blank">Sign in</a>
+      <a href="waitlist.html" class="btn-green">Get Founding Access →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── HERO ── -->
+<section class="page-hero" style="text-align:center;">
+  <div class="container" style="max-width:640px;">
+    <div class="eyebrow" style="margin:0 auto 28px;"><span class="eyebrow-dot"></span>FOUNDING ACCESS · INVITE ONLY · LIMITED COHORT</div>
+    <h1 class="hero-h1">Lock your rate.<br><span>Keep it forever.</span></h1>
+    <p class="hero-sub" style="margin:0 auto;">This isn't a SaaS checkout. It's founding access, available to a limited cohort of agents before we open to the public.<br>Confirm your spot, your rate locks permanently, and you never pay more regardless of what comes after.</p>
+    <p style="font-size:13px;font-weight:700;color:var(--green);letter-spacing:0.06em;text-transform:uppercase;margin-top:20px;">We're onboarding a limited number of agents per market.<br>Cohort fills and closes.</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:16px;opacity:0.75;">No credit card to join. Your rate locks at confirmation. Billing starts when your market goes live.</p>
+  </div>
+</section>
+
+
+<!-- ── PRICING TIERS ── -->
+<section class="section-light">
+  <div class="container">
+    <div class="pricing-grid">
+
+      <!-- Founding Member (Featured) -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">FOUNDING ACCESS, LIMITED</div>
+        <div class="pricing-tier dark-text">Founding Member</div>
+        <div class="pricing-sub light-muted">Rate locked for life · Cohort fills and closes</div>
+        <div class="pricing-price dark-text">$79</div>
+        <div class="pricing-freq light-muted">/ month · Rate locked at confirmation · Billed at market launch</div>
+        <ul class="pricing-features dark-list">
+          <li>Primary market</li>
+          <li>Live MLS data sync (15-min refresh)</li>
+          <li>All 10 intelligence modules</li>
+          <li>CMA Generator with PDF export</li>
+          <li>Weekly market digest</li>
+        </ul>
+        <a href="waitlist.html" class="btn-hero" style="width:100%;justify-content:center;">Get Founding Access →</a>
+        <p style="font-size:11.5px;color:rgba(255,255,255,0.4);text-align:center;margin-top:12px;">No credit card · Rate locks at confirmation · Billing starts at market launch</p>
+      </div>
+
+      <!-- Agent Pro -->
+      <div class="pricing-card">
+        <div class="pricing-tier light">Agent Pro</div>
+        <div class="pricing-sub">Standard access · After founding cohort closes</div>
+        <div class="pricing-price light-text">$149</div>
+        <div class="pricing-freq muted-text">/ month · No founding lock · Rate&nbsp;may&nbsp;increase</div>
+        <ul class="pricing-features">
+          <li>Everything in Founding</li>
+          <li>All Massachusetts markets (expanding)</li>
+          <li>Priority support</li>
+          <li>Quarterly market briefings</li>
+          <li>Early access to new features</li>
+        </ul>
+        <a href="waitlist.html" class="btn-green-outline" style="width:100%;justify-content:center;">Get Founding Access →</a>
+      </div>
+
+      <!-- Team / Brokerage -->
+      <div class="pricing-card dark">
+        <div class="pricing-tier dark-text">Team / Brokerage</div>
+        <div class="pricing-sub light-muted">3+ agents · Volume pricing</div>
+        <div style="font-size:36px;font-weight:900;color:var(--white);margin-bottom:4px;letter-spacing:-1px;">Contact us</div>
+        <div class="pricing-freq light-muted">Custom pricing based on team size&nbsp;and&nbsp;coverage</div>
+        <ul class="pricing-features dark-list">
+          <li>Everything in Pro</li>
+          <li>Multi-agent seat management</li>
+          <li>Custom market coverage on request</li>
+          <li>Dedicated onboarding and training</li>
+          <li>Quarterly strategic review</li>
+        </ul>
+        <a href="mailto:info@realtiintel.com" class="btn-green-outline" style="width:100%;justify-content:center;">Contact Us →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOUNDING MEMBER EXPLAINER ── -->
+<section class="section-gray">
+  <div class="container" style="max-width:720px;text-align:center;">
+    <h2 class="section-h2-dark" style="margin-bottom:20px;">This is not a discount.<br>It's a lock.</h2>
+    <p class="body-dark">The founding rate isn't a promo. It's a permanent commitment to the agents who join early, use the platform, and help shape what gets built. When this cohort fills, $79/month is gone, the standard rate is $149, and it will only go up from there.</p>
+    <p class="body-dark" style="margin-top:16px;">Every agent who has ever said "I wish I had gotten in earlier" is talking about a moment exactly like this one.</p>
+    <p class="body-dark" style="margin-top:16px;">We're opening a limited cohort. Not for artificial scarcity. Because we're a small team and we want to give early members real attention during onboarding.</p>
+    <div class="guarantee-row" style="text-align:left;margin-top:48px;">
+      <div class="guarantee-item">
+        <div class="guarantee-icon"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span></div>
+        <div class="guarantee-title" style="color:var(--text-dark);">Rate locked at&nbsp;confirmation</div>
+        <div class="guarantee-body">Confirmed in writing. Never&nbsp;renegotiated.</div>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></span></div>
+        <div class="guarantee-title" style="color:var(--text-dark);">Cancel anytime</div>
+        <div class="guarantee-body">No contracts, no annual&nbsp;commitment,<br>no cancellation fee.</div>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span></div>
+        <div class="guarantee-title" style="color:var(--text-dark);">No credit card to&nbsp;join</div>
+        <div class="guarantee-body">We'll collect it when your&nbsp;market goes live.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FAQ ── -->
+<section class="section-light">
+  <div class="container" style="max-width:760px;">
+    <h2 class="section-h2-dark" style="margin-bottom:40px;">Questions we get.</h2>
+    <div class="faq-item">
+      <div class="faq-q">What does "your market going live" mean?</div>
+      <div class="faq-a">Realti Intel is launching region by region across Massachusetts. If your primary market isn't live yet, we'll notify you the moment it is. Your founding rate locks at confirmation. Billing starts when your market goes live, so you're never charged for a platform you can't&nbsp;use.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I add additional towns after signing up?</div>
+      <div class="faq-a">Founding Member includes your primary market. If you work across multiple towns, the Agent Pro and Team tiers are built for broader coverage. Founding members also get priority access as new markets open, so if your adjacent towns aren't live yet, you'll be first&nbsp;in.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How is this different from RPR, ShowingTime, or my broker's tools?</div>
+      <div class="faq-a">Those tools give you access to superficial level data. Realti Intel gives you actionable intelligence, scored, weighted, and interpreted so you know exactly what the numbers mean and what to do with them. RPR doesn't tell you whether to price at $749K or $779K, or what it costs your seller if you're wrong. ShowingTime doesn't tell you the optimal week to list for this property type in this town. Your broker's tools don't go deeper than whatever their vendor built years ago. Realti Intel gives you the knowledge to price with precision, negotiate from a position of strength, and see market shifts before your competition&nbsp;does.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is this for buyer agents, listing agents, or both?</div>
+      <div class="faq-a">Both. Seasonal Intelligence and Market Opportunities are particularly valuable for buyer agents. MPS, Sold Analytics, and CMA Generator are built for listing presentations. Most agents find they use all ten modules across both sides of a&nbsp;transaction.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if my market isn't covered yet?</div>
+      <div class="faq-a">Tell us where you work when you join the waitlist. We prioritize new markets based on demand concentration. The more agents who request a specific town, the faster we build it&nbsp;out.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── ROI REFRAME ── -->
+<section style="background:var(--navy-mid);padding:64px 0;border-top:1px solid rgba(255,255,255,0.07);">
+  <div class="container" style="max-width:860px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.09em;color:var(--green);text-transform:uppercase;margin-bottom:12px;">The math</div>
+        <p style="font-size:clamp(20px,2.5vw,28px);font-weight:800;color:var(--white);letter-spacing:-0.8px;line-height:1.25;margin-bottom:12px;">One mispriced listing costs a seller <span style="color:var(--green);">$33,124.</span></p>
+        <p style="font-size:16px;color:var(--muted);line-height:1.6;">Every 10 extra days on market at the wrong price. This platform costs $79/month.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="background:rgba(18,183,106,0.08);border:1px solid rgba(18,183,106,0.18);border-radius:12px;padding:20px 24px;">
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;">One mispriced listing</div>
+          <div style="font-size:28px;font-weight:900;color:#F87171;letter-spacing:-1px;">−$33,124</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Lost seller proceeds</div>
+        </div>
+        <div style="background:rgba(18,183,106,0.08);border:1px solid rgba(18,183,106,0.18);border-radius:12px;padding:20px 24px;">
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;">Founding rate · per year</div>
+          <div style="font-size:28px;font-weight:900;color:var(--green);letter-spacing:-1px;">$948</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">This isn't a cost. It's protection.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOTTOM CTA ── -->
+<section class="section-dark" style="text-align:center;">
+  <div class="container" style="max-width:540px;">
+    <h2 class="section-h2-light" style="margin-bottom:16px;">The founding rate closes when this cohort fills.<br>It will not reopen.</h2>
+    <p style="color:var(--muted);font-size:16px;margin-bottom:32px;">Lock $79/month for life —<br>or pay $149 later with no lock, no guarantee.</p>
+    <a href="waitlist.html" class="btn-hero">Get Founding Access →</a>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+          <span style="font-size:18px;font-weight:700;color:var(--white);letter-spacing:-0.5px;">Realti Intel</span>
+        </div>
+        <div class="footer-tagline">Rapid Intelligence for Real Estate.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="realti_homepage_preview.html">Home</a></li>
+          <li><a href="product.html">Product</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="markets.html">Markets</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Markets</div>
+        <ul class="footer-links">
+          <li><a href="markets.html">MetroWest</a></li>
+          <li><a href="markets.html">Boston Core</a></li>
+          <li><a href="markets.html">North Shore</a></li>
+          <li><a href="markets.html">All Markets →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Realti Intel Inc. · All rights reserved</div>
+      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:600;color:var(--green);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        Built in Massachusetts
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ── STICKY CTA BAR ── -->
+<div class="sticky-cta-bar" id="sticky-cta">
+  <span class="sticky-bar-text">Founding rate closing &nbsp;·&nbsp; <strong>$79/month, locked for life</strong></span>
+  <a href="waitlist.html" class="sticky-bar-btn">Get Founding Access →</a>
+  <button class="sticky-bar-close" id="sticky-close" aria-label="Dismiss">✕</button>
+</div>
+
+<script>
+  // ── Scroll reveal animations ──
+  (function() {
+    var SELECTORS = 'h2, h3.module-card.feature-card.use-case.perk.problem-card.pricing-card.step-h > div.steps-h > div.stat-block.market-card.guarantee-item.faq-item, [class*="-card"], [class*="-step"], [class*="-perk"]';
+    function initReveal() {
+      var els = document.querySelectorAll(SELECTORS);
+      els.forEach(function(el) {
+        // Skip elements already in viewport on load (hero area)
+        var rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.85) {
+          el.classList.add('js-reveal');
+        }
+      });
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.js-reveal').forEach(function(el) {
+        observer.observe(el);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else {
+      initReveal();
+    }
+  })();
+
+  // ── Sticky CTA bar ──
+  (function() {
+    var bar = document.getElementById('sticky-cta');
+    var closeBtn = document.getElementById('sticky-close');
+    if (!bar) return;
+    var dismissed = sessionStorage.getItem('sticky-dismissed');
+    if (dismissed) return;
+    var shown = false;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 520 && !shown) {
+        shown = true;
+        bar.classList.add('visible');
+      } else if (window.scrollY <= 520 && shown) {
+        shown = false;
+        bar.classList.remove('visible');
+      }
+    }, { passive: true });
+    closeBtn.addEventListener('click', function() {
+      bar.classList.remove('visible');
+      bar.classList.add('hidden');
+      sessionStorage.setItem('sticky-dismissed', '1');
+    });
+  })();
+
+</script>
+
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  if(!nav) return;
+  nav.style.transition = 'background 0.35s ease, box-shadow 0.35s ease';
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    var ratio = Math.min(y / 120, 1);
+    var alpha = 0.45 + ratio * 0.43; // 0.45 at top → 0.88 when scrolled
+    nav.style.background = 'rgba(15,23,42,' + alpha.toFixed(2) + ')';
+    nav.style.boxShadow = ratio > 0.1 ? '0 1px 24px rgba(0,0,0,' + (ratio * 0.35).toFixed(2) + ')' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              Int             @id @default(autoincrement())
+  email           String          @unique
+  password        String
+  display_name    String?
+  bio             String?
+  avatar_url      String?
+  role            Role            @default(USER)
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
+  artist          Artist?
+  follows         Follow[]
+  likes           Like[]
+  comments        Comment[]
+  blog_posts      BlogPost[]
+  blog_comments   BlogComment[]
+  blog_likes      BlogLike[]
+  blog_saves      BlogSave[]
+  polls_created   Poll[]
+  poll_votes      PollVote[]
+  monthly_votes   MonthlyVote[]
+  collab_requests CollabRequest[] @relation("CollabRequester")
+}
+
+enum Role {
+  USER
+  ARTIST
+  ADMIN
+}
+
+model Artist {
+  id                    Int             @id @default(autoincrement())
+  name                  String
+  slug                  String          @unique
+  image_url             String?
+  header_image_url      String?
+  bio                   String?
+  is_verified           Boolean         @default(false)
+  instagram             String?
+  twitter               String?
+  created_at            DateTime        @default(now())
+  updated_at            DateTime        @updatedAt
+  user                  User?           @relation(fields: [user_id], references: [id])
+  user_id               Int?            @unique
+  albums                Album[]
+  songs                 Song[]
+  followers             Follow[]
+  blog_posts            BlogPost[]
+  collab_requests       CollabRequest[] @relation("CollabTarget")
+  collab_collaborations CollabRequest[] @relation("CollabCollaborator")
+  external_profiles     ArtistExternalProfile[]
+}
+
+enum ExternalProvider {
+  GENIUS
+}
+
+model ArtistExternalProfile {
+  id             Int              @id @default(autoincrement())
+  artist_id      Int
+  artist         Artist           @relation(fields: [artist_id], references: [id], onDelete: Cascade)
+  provider       ExternalProvider
+  external_id    String?
+  url            String
+  slug           String?
+  raw_data       Json?
+  last_synced_at DateTime?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+
+  @@unique([artist_id, provider])
+  @@index([provider, external_id])
+}
+
+model Album {
+  id            Int      @id @default(autoincrement())
+  name          String
+  slug          String   @unique
+  cover_art_url String?
+  release_date  String?
+  artist_id     Int
+  artist        Artist   @relation(fields: [artist_id], references: [id])
+  songs         Song[]
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model Song {
+  id                 Int      @id @default(autoincrement())
+  title              String
+  slug               String   @unique
+  lyrics             String?
+  song_art_image_url String?
+  release_date       String?
+  primary_artist_id  Int
+  primary_artist     Artist   @relation(fields: [primary_artist_id], references: [id])
+  album_id           Int?
+  album              Album?   @relation(fields: [album_id], references: [id])
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model Follow {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  artist_id  Int
+  artist     Artist   @relation(fields: [artist_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, artist_id])
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  item_type  ItemType
+  item_id    Int
+  created_at DateTime @default(now())
+
+  @@unique([user_id, item_type, item_id])
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  item_type  ItemType
+  item_id    Int
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+enum ItemType {
+  SONG
+  ALBUM
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model BlogPost {
+  id           Int           @id @default(autoincrement())
+  slug         String        @unique
+  title        String
+  excerpt      String?
+  content      String
+  cover_image  String?
+  status       BlogStatus    @default(DRAFT)
+  author_id    Int
+  author       User          @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  artist_id    Int
+  artist       Artist        @relation(fields: [artist_id], references: [id], onDelete: Cascade)
+  tags         String[]
+  published_at DateTime?
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  comments     BlogComment[]
+  likes        BlogLike[]
+  saves        BlogSave[]
+}
+
+model BlogComment {
+  id         Int      @id @default(autoincrement())
+  post_id    Int
+  post       BlogPost @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model BlogLike {
+  id         Int      @id @default(autoincrement())
+  post_id    Int
+  post       BlogPost @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, post_id])
+}
+
+model BlogSave {
+  id         Int      @id @default(autoincrement())
+  post_id    Int
+  post       BlogPost @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, post_id])
+}
+
+enum PollCategory {
+  ARTIST
+  ALBUM
+  SONG
+}
+
+enum PollPeriod {
+  MONTHLY
+  YEARLY
+}
+
+enum PollStatus {
+  ACTIVE
+  CLOSED
+}
+
+model Poll {
+  id         Int          @id @default(autoincrement())
+  title      String
+  category   PollCategory
+  period     PollPeriod
+  status     PollStatus   @default(ACTIVE)
+  starts_at  DateTime
+  ends_at    DateTime
+  created_by Int
+  creator    User         @relation(fields: [created_by], references: [id])
+  nominees   Nominee[]
+  votes      PollVote[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model Nominee {
+  id         Int          @id @default(autoincrement())
+  poll_id    Int
+  poll       Poll         @relation(fields: [poll_id], references: [id], onDelete: Cascade)
+  item_type  PollCategory
+  item_id    Int
+  item_name  String
+  item_image String?
+  votes      PollVote[]
+  created_at DateTime     @default(now())
+
+  @@unique([poll_id, item_id, item_type])
+}
+
+model PollVote {
+  id         Int      @id @default(autoincrement())
+  poll_id    Int
+  poll       Poll     @relation(fields: [poll_id], references: [id], onDelete: Cascade)
+  nominee_id Int
+  nominee    Nominee  @relation(fields: [nominee_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@unique([poll_id, user_id])
+}
+
+model MonthlyVote {
+  id         Int          @id @default(autoincrement())
+  user_id    Int
+  user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  item_type  PollCategory
+  item_id    Int
+  period     String
+  created_at DateTime     @default(now())
+
+  @@unique([user_id, item_type, period])
+}
+
+enum CollabStatus {
+  PENDING
+  PARTIALLY_APPROVED
+  APPROVED
+  REJECTED
+  CANCELLED
+  COMPLETED
+}
+
+enum CollabType {
+  FEATURE
+  PRODUCTION
+  WRITING
+  OTHER
+}
+
+model CollabRequest {
+  id                     Int          @id @default(autoincrement())
+  requester_id           Int
+  requester              User         @relation("CollabRequester", fields: [requester_id], references: [id], onDelete: Cascade)
+  artist_id              Int
+  artist                 Artist       @relation("CollabTarget", fields: [artist_id], references: [id], onDelete: Cascade)
+  collaborator_artist_id Int?
+  collaborator_artist    Artist?      @relation("CollabCollaborator", fields: [collaborator_artist_id], references: [id])
+  linked_request_id      Int?
+  collab_type            CollabType
+  message                String
+  status                 CollabStatus @default(PENDING)
+  response_message       String?
+  created_at             DateTime     @default(now())
+  updated_at             DateTime     @updatedAt
+  responded_at           DateTime?
+}
+
+model CollabSettings {
+  id            Int      @id @default(1)
+  monthly_limit Int      @default(3)
+  updated_at    DateTime @updatedAt
+  updated_by    Int?
+}

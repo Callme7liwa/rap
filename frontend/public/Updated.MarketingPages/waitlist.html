@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Get Founding Access | Realti Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #12B76A; --green-light: #34D399; --green-dim: #059669;
+    --green-faint: #ECFDF5; --navy: #0F172A; --navy-mid: #1E293B;
+    --navy-light: #334155; --near-black: #080F1A;
+    --white: #FFFFFF; --off-white: #F8FAFC; --muted: #94A3B8;
+    --text: #E2E8F0; --text-dark: #1F2937; --text-body: #374151; --text-muted: #6B7280;
+  }
+  html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--navy); color: var(--white);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,23,42,0.45); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.07); height: 64px;
+    display: flex; align-items: center; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%;
+    display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: var(--white);
+    text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    transition: color .2s; letter-spacing: 0.01em; }
+  .nav-links a:hover.nav-links a.active { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-login { background: transparent; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); padding: 7px 15px; border-radius: 7px; font-weight: 600; font-size: 13.5px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .nav-login:hover { border-color: rgba(255,255,255,0.45); color: var(--white); }
+  .btn-green { display: inline-flex; align-items: center; gap: 6px; background: var(--green);
+    color: var(--white); font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s; }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-1px); }
+  .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: var(--green);
+    color: var(--white); font-size: 15px; font-weight: 800; padding: 14px 26px; border-radius: 8px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 24px rgba(18,183,106,0.35); }
+  .btn-hero:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(18,183,106,0.45); }
+  section { width: 100%; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(18,183,106,0.12); border: 1px solid rgba(18,183,106,0.3);
+    border-radius: 100px; padding: 5px 14px; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.08em; color: var(--green-light); text-transform: uppercase; margin-bottom: 28px; }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  /* HERO */
+  .page-hero { padding: 140px 0 80px; background: var(--navy); position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 700px;
+    height: 700px; background: radial-gradient(ellipse, rgba(18,183,106,0.08) 0%, transparent 65%);
+    pointer-events: none; }
+  .hero-h1 { font-size: clamp(38px,5.5vw,68px); font-weight: 900; line-height: 1.06;
+    letter-spacing: -2px; color: var(--white); margin-bottom: 20px; }
+  .hero-h1 span { color: var(--green); }
+  /* SECTIONS */
+  .section-dark { background: var(--navy); padding: 96px 0; }
+  .section-light { background: var(--off-white); padding: 96px 0; }
+  .section-h2-light { font-size: clamp(28px,3.5vw,44px); font-weight: 800; letter-spacing: -1px;
+    color: var(--white); line-height: 1.1; margin-bottom: 18px; }
+  .section-h2-dark { font-size: clamp(28px,3.5vw,44px); font-weight: 800; letter-spacing: -1px;
+    color: var(--text-dark); line-height: 1.1; margin-bottom: 18px; }
+  /* FORM */
+  .waitlist-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .form-field input, .form-field select {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; padding: 12px 16px; font-size: 15px; color: var(--white);
+    font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s; }
+  .form-field input:focus, .form-field select:focus { border-color: var(--green); }
+  .form-field select option { background: var(--navy-mid); color: var(--white); }
+  .form-submit { background: var(--green); color: var(--white); border: none; border-radius: 8px;
+    padding: 15px; font-size: 15px; font-weight: 800; cursor: pointer; transition: background .2s;
+    width: 100%; }
+  .form-submit:hover { background: var(--green-light); }
+  .trust-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px;
+    font-size: 12.5px; color: var(--muted); justify-content: center; }
+  .trust-check { color: var(--green); }
+  /* STEPS */
+  .steps-h { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+  @media (max-width: 768px) { .steps-h { grid-template-columns: 1fr; } }
+  .step-h-num { font-size: 36px; font-weight: 900; color: var(--green); margin-bottom: 12px; }
+  .step-h-title { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+  .step-h-body { font-size: 14px; color: var(--text-body); line-height: 1.6; }
+  /* FOOTER */
+  footer { background: var(--near-black); border-top: 1px solid rgba(255,255,255,0.06); padding: 64px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 240px; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 16px; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: var(--muted); }
+
+
+  /* HEADLINE BALANCE */
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ── SCROLL REVEAL ── */
+  .js-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .js-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Coming soon links ── */
+  a.coming-soon {
+    opacity: 0.4 !important;
+    cursor: default !important;
+    pointer-events: none !important;
+    text-decoration: none !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="realti_homepage_preview.html" class="nav-logo">
+      <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+      <span>Realti Intel</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="realti_homepage_preview.html">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="markets.html">Markets</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://staging.realtiintel.com/" class="nav-login" target="_blank">Sign in</a>
+      <a href="waitlist.html" class="btn-green">Get Founding Access →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── PRODUCT PREVIEW ── -->
+<section style="background:var(--near-black);padding:60px 0;">
+  <div class="container" style="max-width:960px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.09em;color:var(--green);text-transform:uppercase;">What you're getting access to</div>
+    </div>
+    <div class="placeholder-dark">🖥️ Product preview, Market Power Score, Seasonal Intelligence predictor, and CMA Generator side by side.</div>
+  </div>
+</section>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 480px;gap:80px;align-items:start;">
+
+      <!-- Left: Hero copy + benefits -->
+      <div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span>FOUNDING COHORT · MASSACHUSETTS · CLOSES WHEN FULL</div>
+        <h1 class="hero-h1">This is not for<br><span>every agent.</span></h1>
+        <p style="font-size:16px;line-height:1.6;color:var(--white);font-weight:600;margin-bottom:12px;">It's for the ones who win.</p>
+        <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-bottom:28px;">We're onboarding a limited founding cohort of Massachusetts agents.<br>First in locks the rate.<br>First in gets the edge.<br>First in shapes what gets built next.</p>
+
+        <!-- Who this is for qualifier -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px 24px;margin-bottom:28px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">This is for agents who</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:14px;color:var(--text);display:flex;align-items:center;gap:10px;"><span style="color:var(--green);font-weight:700;">✓</span>Walk into listing appointments to win, not to present</div>
+            <div style="font-size:14px;color:var(--text);display:flex;align-items:center;gap:10px;"><span style="color:var(--green);font-weight:700;">✓</span>Price from data, not instinct</div>
+            <div style="font-size:14px;color:var(--text);display:flex;align-items:center;gap:10px;"><span style="color:var(--green);font-weight:700;">✓</span>Know their market better than anyone else in the room</div>
+            <div style="font-size:14px;color:var(--text);display:flex;align-items:center;gap:10px;"><span style="color:var(--green);font-weight:700;">✓</span>Want an advantage the agents around them don't have</div>
+          </div>
+        </div>
+
+        <!-- Per-market scarcity -->
+        <div style="background:rgba(18,183,106,0.08);border:1px solid rgba(18,183,106,0.2);border-radius:12px;padding:18px 22px;margin-bottom:36px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#12B76A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span style="font-size:12px;font-weight:700;color:var(--green);letter-spacing:0.06em;text-transform:uppercase;">Per-market limit in effect</span>
+          </div>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;">We cap founding access per market. This isn't artificial scarcity, it's because we can only onboard so many agents well. When your market fills, that's it. You're either in or you're paying $149 with no lock.</p>
+        </div>
+
+        <!-- ROI Anchor -->
+        <div style="background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.18);border-radius:12px;padding:18px 22px;margin-bottom:28px;">
+          <p style="font-size:13.5px;color:rgba(255,255,255,0.8);line-height:1.6;margin:0;">Every 10 days at the wrong price costs a seller <strong style="color:#F87171;">$33,124</strong> in lost proceeds. One right call in a listing appointment covers years of this&nbsp;platform.<br><strong style="color:var(--white);">This isn't a cost, it's protection.</strong></p>
+        </div>
+
+        <!-- Benefits -->
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Lifetime founding rate</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;">Locked at $79/month at confirmation. Billing starts when your market goes live. Never increases, even as we add features, expand coverage, and raise the public price.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">First access to new markets</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;">Tell us where you work. When we go live in your town, you're first in. No waiting in a public queue while your competitors get there before you.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Direct product input</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;">We're actively building. Your feedback, from real conversations in real markets, shapes what ships next. Founding members have shaped every major feature update so far.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;background:rgba(18,183,106,0.12);border:1px solid rgba(18,183,106,0.22);border-radius:10px;color:#12B76A;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Priority support</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;">Onboarding call within 48 hours of confirmation. Dedicated support channel during the preview period. You won't be waiting on a ticket queue.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div style="background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:40px;position:sticky;top:88px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--green);text-transform:uppercase;margin-bottom:8px;">Founding Access</div>
+        <h2 style="font-size:22px;font-weight:800;color:var(--white);margin-bottom:6px;letter-spacing:-0.5px;">Secure Your Spot</h2>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:28px;">Your market's cohort is filling now. Rate locks at confirmation. Billing starts when your market goes live. When it fills, this rate is gone.</p>
+        <form class="waitlist-form" id="waitlist-form"
+              action="https://app.kit.com/forms/9412304/subscriptions"
+              method="post">
+          <div class="form-row">
+            <div class="form-field">
+              <label>First name *</label>
+              <input type="text" id="wl-first" name="first_name" placeholder="Jennifer">
+            </div>
+            <div class="form-field">
+              <label>Last name *</label>
+              <input type="text" id="wl-last" name="last_name" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Email address *</label>
+            <input type="email" id="wl-email" name="email_address" placeholder="jennifer@smithrealty.com">
+          </div>
+          <div class="form-field">
+            <label>Brokerage or team name</label>
+            <input type="text" name="fields[brokerage]" placeholder="Smith Realty Group (optional)">
+          </div>
+          <div class="form-field">
+            <label>Primary market, town or ZIP *</label>
+            <input type="text" id="wl-market" name="fields[primary_market]" placeholder="Wellesley, MA">
+          </div>
+          <div class="form-field">
+            <label>Additional markets you'd like covered</label>
+            <input type="text" name="fields[additional_markets]" placeholder="Newton, Natick, Needham (optional)">
+          </div>
+          <div class="form-field">
+            <label>How did you hear about Realti Intel?</label>
+            <select name="fields[referral_source]">
+              <option value="">Select one (optional)</option>
+              <option>Colleague or referral</option>
+              <option>Google search</option>
+              <option>Social media</option>
+              <option>Real estate conference</option>
+              <option>My brokerage</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit" id="waitlist-submit">Secure My Spot →</button>
+          <div class="trust-row">
+            <span><span class="trust-check">✓</span> No credit card required</span>
+            <span><span class="trust-check">✓</span> No spam</span>
+            <span><span class="trust-check">✓</span> We confirm within 48 hours</span>
+          </div>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;opacity:0.7;">Reviewed within 48 hours · Rate confirmed in writing · Cancel anytime</p>
+
+          <!-- What happens next, compact -->
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;">What happens next</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(18,183,106,0.15);border:1px solid rgba(18,183,106,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);">1</span>
+                <span style="font-size:13px;color:var(--muted);">We review your market and cohort availability</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(18,183,106,0.15);border:1px solid rgba(18,183,106,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);">2</span>
+                <span style="font-size:13px;color:var(--muted);">Confirmation email within 24–48 hours</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(18,183,106,0.15);border:1px solid rgba(18,183,106,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);">3</span>
+                <span style="font-size:13px;color:var(--muted);">Your founding rate locks at $79/month, forever</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(18,183,106,0.15);border:1px solid rgba(18,183,106,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);">4</span>
+                <span style="font-size:13px;color:var(--muted);">Onboarding call scheduled within 48 hours</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── WHAT HAPPENS NEXT ── -->
+<section class="section-light">
+  <div class="container">
+    <h2 class="section-h2-dark" style="text-align:center;margin-bottom:48px;">Three things happen when you submit.</h2>
+    <div class="steps-h">
+      <div>
+        <div class="step-h-num">01</div>
+        <div class="step-h-title">We review your request</div>
+        <div class="step-h-body">We confirm your primary market and check cohort availability. If your market is live and has space, you'll hear from us within 48 hours. If it's coming soon, you're first on the list when it opens.</div>
+      </div>
+      <div>
+        <div class="step-h-num">02</div>
+        <div class="step-h-title">Your rate locks</div>
+        <div class="step-h-body">Your founding rate locks at confirmation. $79/month, forever. Billing starts when your market goes live, so you're never charged for a platform you can't use yet. The confirmation email contains your rate lock and onboarding instructions.</div>
+      </div>
+      <div>
+        <div class="step-h-num">03</div>
+        <div class="step-h-title">We onboard you</div>
+        <div class="step-h-body">A 30-minute call within 48 hours. We walk you through the platform, set your markets, and make sure you know exactly how to use every module before your next listing appointment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FINAL URGENCY ── -->
+<section class="section-dark" style="text-align:center;">
+  <div class="container" style="max-width:540px;">
+    <p style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--white);line-height:1.4;margin-bottom:8px;">Every agent who has ever said<br>"I wish I had gotten in earlier"</p>
+    <p style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--muted);line-height:1.4;margin-bottom:36px;">is talking about a moment exactly like this one.</p>
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="btn-hero">Get Founding Access →</a>
+    <p style="font-size:12px;color:var(--muted);margin-top:16px;">Founding rate: $79/month · Locked for life · Limited per market</p>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="logo-icon.png" alt="Realti Intel" style="height:40px;width:auto;object-fit:contain;flex-shrink:0;">
+          <span style="font-size:18px;font-weight:700;color:var(--white);letter-spacing:-0.5px;">Realti Intel</span>
+        </div>
+        <div class="footer-tagline">Rapid Intelligence for Real Estate.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="realti_homepage_preview.html">Home</a></li>
+          <li><a href="product.html">Product</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="markets.html">Markets</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Markets</div>
+        <ul class="footer-links">
+          <li><a href="markets.html">MetroWest</a></li>
+          <li><a href="markets.html">Boston Core</a></li>
+          <li><a href="markets.html">North Shore</a></li>
+          <li><a href="markets.html">All Markets →</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Realti Intel Inc. · All rights reserved</div>
+      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(18,183,106,0.1);border:1px solid rgba(18,183,106,0.2);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:600;color:var(--green);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        Built in Massachusetts
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const first  = document.getElementById('wl-first');
+    const last   = document.getElementById('wl-last');
+    const email  = document.getElementById('wl-email');
+    const market = document.getElementById('wl-market');
+
+    // Clear previous error states
+    [first, last, email, market].forEach(el => {
+      el.style.borderColor = '';
+    });
+
+    // Validate required fields
+    let valid = true;
+    [first, last, email, market].forEach(el => {
+      if (!el.value.trim()) {
+        el.style.borderColor = '#F87171';
+        valid = false;
+      }
+    });
+
+    // Basic email format check
+    if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      email.style.borderColor = '#F87171';
+      valid = false;
+    }
+
+    if (!valid) {
+      const firstError = document.querySelector('input[style*="border-color: rgb(248"]');
+      if (firstError) firstError.focus();
+      return;
+    }
+
+    // Show loading state
+    const btn = document.getElementById('waitlist-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    // Submit to ConvertKit, then redirect to confirmation page
+    const formData = new FormData(this);
+    fetch('https://app.kit.com/forms/9412304/subscriptions', {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors' // ConvertKit doesn't require CORS for form posts
+    })
+    .then(() => {
+      window.location.href = 'confirmation.html';
+    })
+    .catch(() => {
+      // Even on network error, redirect, ConvertKit likely captured it
+      window.location.href = 'confirmation.html';
+    });
+  });
+
+  // ── Scroll reveal animations ──
+  (function() {
+    var SELECTORS = 'h2, h3.module-card.feature-card.use-case.perk.problem-card.pricing-card.step-h > div.steps-h > div.stat-block.market-card.guarantee-item.faq-item, [class*="-card"], [class*="-step"], [class*="-perk"]';
+    function initReveal() {
+      var els = document.querySelectorAll(SELECTORS);
+      els.forEach(function(el) {
+        // Skip elements already in viewport on load (hero area)
+        var rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.85) {
+          el.classList.add('js-reveal');
+        }
+      });
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.js-reveal').forEach(function(el) {
+        observer.observe(el);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else {
+      initReveal();
+    }
+  })();
+</script>
+
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  if(!nav) return;
+  nav.style.transition = 'background 0.35s ease, box-shadow 0.35s ease';
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    var ratio = Math.min(y / 120, 1);
+    var alpha = 0.45 + ratio * 0.43; // 0.45 at top → 0.88 when scrolled
+    nav.style.background = 'rgba(15,23,42,' + alpha.toFixed(2) + ')';
+    nav.style.boxShadow = ratio > 0.1 ? '0 1px 24px rgba(0,0,0,' + (ratio * 0.35).toFixed(2) + ')' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
